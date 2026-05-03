@@ -137,7 +137,7 @@ const Footer: React.FC<FooterProps> = ({
               className="wave-segment"
               style={{
                 height: `${index + 1}px`,
-                backgroundColor: "hsl(var(--foreground) / 0.1)",
+                backgroundColor: "hsl(var(--foreground))",
                 transition: "transform 0.1s ease",
                 willChange: "transform",
                 marginTop: "-2px",
