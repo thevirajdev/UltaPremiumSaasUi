@@ -28,9 +28,11 @@ const badgeVariants = cva(
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+    VariantProps<typeof badgeVariants> {
+  pulse?: boolean;
+}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({ className, variant, pulse, ...props }: BadgeProps) {
   return (
     <div className={cn(badgeVariants({ variant }), className)} {...props} />
   )
@@ -42,16 +44,16 @@ export function GlowBadge({ className, variant, ...props }: BadgeProps) {
   )
 }
 
-export function StatusBadge({ status, className, ...props }: { status: string } & BadgeProps) {
+export function StatusBadge({ status, className, children, ...props }: { status?: string } & BadgeProps) {
   let v = "default" as BadgeProps["variant"];
-  const s = status?.toLowerCase() || "";
-  if (s === "active" || s === "completed" || s === "success" || s === "online") v = "success";
+  const s = (status || children?.toString())?.toLowerCase() || "";
+  if (s === "active" || s === "completed" || s === "success" || s === "online" || s === "confirmed") v = "success";
   if (s === "pending" || s === "warning" || s === "in progress") v = "warning";
   if (s === "failed" || s === "cancelled" || s === "error" || s === "offline") v = "destructive";
   
   return (
-    <Badge variant={v} className={className} {...props}>
-      {status}
+    <Badge variant={props.variant || v} className={className} {...props}>
+      {status || children}
     </Badge>
   );
 }

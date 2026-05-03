@@ -87,5 +87,25 @@ const TabsContent = React.forwardRef<
 ))
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
-const TabPanel = TabsContent
+const TabPanel = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & { value?: string }
+>(({ className, value, ...props }, ref) => {
+  if (value === undefined) {
+    return <div ref={ref} className={cn("mt-2", className)} {...props} />;
+  }
+  return (
+    <TabsPrimitive.Content
+      ref={ref}
+      value={value}
+      className={cn(
+        "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        className
+      )}
+      {...props as any}
+    />
+  );
+});
+TabPanel.displayName = "TabPanel";
+
 export { Tabs, TabsList, TabsTrigger, TabsContent, TabPanel }
