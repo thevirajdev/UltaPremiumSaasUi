@@ -36,4 +36,24 @@ function Badge({ className, variant, ...props }: BadgeProps) {
   )
 }
 
+export function GlowBadge({ className, variant, ...props }: BadgeProps) {
+  return (
+    <Badge className={cn("shadow-[0_0_15px_rgba(var(--primary),0.3)]", className)} variant={variant} {...props} />
+  )
+}
+
+export function StatusBadge({ status, className, ...props }: { status: string } & BadgeProps) {
+  let v = "default" as BadgeProps["variant"];
+  const s = status?.toLowerCase() || "";
+  if (s === "active" || s === "completed" || s === "success" || s === "online") v = "success";
+  if (s === "pending" || s === "warning" || s === "in progress") v = "warning";
+  if (s === "failed" || s === "cancelled" || s === "error" || s === "offline") v = "destructive";
+  
+  return (
+    <Badge variant={v} className={className} {...props}>
+      {status}
+    </Badge>
+  );
+}
+
 export { Badge, badgeVariants }
