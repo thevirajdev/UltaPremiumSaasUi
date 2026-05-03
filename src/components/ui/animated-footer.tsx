@@ -82,14 +82,14 @@ const Footer: React.FC<FooterProps> = ({
   return (
     <footer
       ref={footerRef}
-      className="bg-black text-white relative flex flex-col w-full select-none"
+      className="bg-background text-foreground border-t border-border/40 relative flex flex-col w-full select-none"
     >
       <div className="w-full flex flex-col md:flex-row justify-between gap-4 pb-24 pt-8 px-4 md:px-8">
         <div className="space-y-2">
           <ul className="flex flex-wrap gap-4">
             {leftLinks.map((link, index) => (
               <li key={index}>
-                <a href={link.href} className="text-sm hover:text-sky-400">
+                <a href={link.href} className="text-sm hover:text-primary transition-colors">
                   {link.label}
                 </a>
               </li>
@@ -111,7 +111,7 @@ const Footer: React.FC<FooterProps> = ({
           <ul className="flex flex-wrap gap-4">
             {rightLinks.map((link, index) => (
               <li key={index}>
-                <a href={link.href} className="text-sm hover:text-sky-400">
+                <a href={link.href} className="text-sm hover:text-primary transition-colors">
                   {link.label}
                 </a>
               </li>
@@ -137,7 +137,7 @@ const Footer: React.FC<FooterProps> = ({
               className="wave-segment"
               style={{
                 height: `${index + 1}px`,
-                backgroundColor: "rgb(255, 255, 255)",
+                backgroundColor: "hsl(var(--foreground) / 0.1)",
                 transition: "transform 0.1s ease",
                 willChange: "transform",
                 marginTop: "-2px",

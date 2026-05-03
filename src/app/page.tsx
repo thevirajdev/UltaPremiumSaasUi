@@ -35,7 +35,7 @@ export default function LandingPage() {
     <AuroraBackground>
       <Header />
       <Hero />
-      <div className="flex flex-col overflow-hidden w-full -mt-16 lg:-mt-24 relative z-20">
+      <div className="flex flex-col overflow-hidden w-full -mt-32 lg:-mt-48 relative z-20">
         <ContainerScroll titleComponent={null}>
           <Image
             src="/dashboard.png?v=3"
