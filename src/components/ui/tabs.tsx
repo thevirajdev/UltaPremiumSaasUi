@@ -5,7 +5,42 @@ import * as TabsPrimitive from "@radix-ui/react-tabs"
 
 import { cn } from "@/lib/utils"
 
-const Tabs = TabsPrimitive.Root
+const Tabs = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> & {
+    tabs?: { id: string; label: string; count?: number }[];
+    activeTab?: string;
+    onTabChange?: (id: string) => void;
+  }
+>(({ className, tabs, activeTab, onTabChange, children, ...props }, ref) => {
+  if (tabs) {
+    return (
+      <div className={cn("flex space-x-1 rounded-xl bg-white/[0.03] p-1", className)}>
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => onTabChange?.(tab.id)}
+            className={cn(
+              "w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all",
+              "focus:outline-none",
+              activeTab === tab.id
+                ? "bg-white/[0.1] text-white shadow"
+                : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
+            )}
+          >
+            {tab.label} {tab.count !== undefined && <span className="ml-2 bg-white/10 px-2 py-0.5 rounded-full text-xs">{tab.count}</span>}
+          </button>
+        ))}
+      </div>
+    );
+  }
+  return (
+    <TabsPrimitive.Root ref={ref} className={className} {...props as any}>
+      {children}
+    </TabsPrimitive.Root>
+  );
+});
+Tabs.displayName = TabsPrimitive.Root.displayName;
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
