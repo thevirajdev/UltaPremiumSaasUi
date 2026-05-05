@@ -16,8 +16,12 @@ import {
   CreditCard,
   User,
   Moon,
-  Sun
+  Sun,
+  Bot,
+  Loader2
 } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
 type MenuItem = { 
   name: string; 
@@ -72,11 +76,15 @@ const Menu = ({ children, items, label }: { children: React.ReactNode; items: Me
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const profileRef = useRef<HTMLDivElement | null>(null);
   const [isProfileActive, setIsProfileActive] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const navigation = [
     { href: "/dashboard", name: "Overview", icon: <LayoutDashboard className="w-5 h-5" /> },
+    { href: "/dashboard/assistant", name: "AI Assistant", icon: <Bot className="w-5 h-5" /> },
     { href: "/dashboard/clinics", name: "Clinics", icon: <Hospital className="w-5 h-5" /> },
     { href: "/dashboard/calls", name: "Call Logs", icon: <Phone className="w-5 h-5" /> },
     { href: "/dashboard/appointments", name: "Appointments", icon: <Calendar className="w-5 h-5" /> },
@@ -111,7 +119,7 @@ export default function Sidebar() {
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Phone className="text-white w-5 h-5" />
             </div>
-            <span className="text-white font-bold text-xl tracking-tight">ClinicAI</span>
+            <span className="text-white font-bold text-xl tracking-tight">AIVoice OS</span>
           </Link>
         </div>
 
@@ -196,14 +204,26 @@ export default function Sidebar() {
                     <User className="w-4 h-4" />
                     Profile
                   </Link>
-                  <button className="w-full flex items-center gap-2 p-2 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg duration-150">
-                    <Moon className="w-4 h-4" />
-                    Dark Mode
+                  <button 
+                    className="w-full flex items-center gap-2 p-2 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg duration-150"
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  >
+                    {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                    {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
                   </button>
                   <div className="h-px bg-zinc-800 my-1 mx-2" />
-                  <button className="w-full flex items-center gap-2 p-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg duration-150">
-                    <LogOut className="w-4 h-4" />
-                    Sign out
+                  <button 
+                    className="w-full flex items-center gap-2 p-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg duration-150 disabled:opacity-50"
+                    disabled={isLoggingOut}
+                    onClick={() => {
+                      setIsLoggingOut(true);
+                      setTimeout(() => {
+                        router.push('/');
+                      }, 1000);
+                    }}
+                  >
+                    {isLoggingOut ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogOut className="w-4 h-4" />}
+                    {isLoggingOut ? 'Signing out...' : 'Sign out'}
                   </button>
                 </div>
               </div>

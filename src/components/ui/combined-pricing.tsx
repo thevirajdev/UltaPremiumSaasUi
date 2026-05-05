@@ -17,12 +17,12 @@ export function CombinedPricing() {
 
   // Features
   const features = [
-    "Advanced Real-time Analytics",
-    "Unlimited Team Members",
-    "Custom Integrations (API)",
-    "White-label Reports",
+    "Medically-Trained Personas",
+    "Unlimited Agency Clients",
+    "Vapi & EMR Integrations",
     "HIPAA Compliance & Security",
-    "24/7 Priority Support",
+    "White-label Agency Dashboard",
+    "24/7 Priority Clinical Support",
   ]
 
   // Testimonials
@@ -31,29 +31,29 @@ export function CombinedPricing() {
       id: 1,
       name: "Alex Johnson",
       role: "Operations Director",
-      company: "HealthPlus",
+      company: "HealthPlus Agency",
       content:
-        "This platform saved us weeks of setup time. The analytics integration is flawless, and the components are incredibly easy to navigate.",
+        "ClinicAI saved our agency weeks of setup time. The Vapi integration is flawless, and the clinical personas are incredibly lifelike.",
       rating: 5,
       avatar: "https://randomuser.me/api/portraits/men/32.jpg",
     },
     {
       id: 2,
       name: "Sarah Miller",
-      role: "Clinic Manager",
+      role: "Clinic Group Manager",
       company: "MedCare Associates",
       content:
-        "We've used many solutions, but ClinicAI stands out for its clean architecture and attention to detail. The team support is excellent.",
+        "We've used many solutions, but ClinicAI stands out for its clean clinical architecture and EMR reliability. The team support is excellent.",
       rating: 5,
       avatar: "https://randomuser.me/api/portraits/women/44.jpg",
     },
     {
       id: 3,
       name: "David Park",
-      role: "CTO",
-      company: "InnovateLabs",
+      role: "Agency CTO",
+      company: "InnovateHealth",
       content:
-        "Our team was able to launch our MVP in record time thanks to this platform. Everything worked right out of the box. Highly recommended!",
+        "Our agency was able to launch 10 clinics in record time thanks to this platform. Everything worked right out of the box. Highly recommended!",
       rating: 5,
       avatar: "https://randomuser.me/api/portraits/men/22.jpg",
     }
@@ -79,13 +79,13 @@ export function CombinedPricing() {
           >
             <div className="inline-flex items-center gap-1 px-3 py-1 mb-4 rounded-full border border-primary/20 shadow-sm bg-background/50 backdrop-blur text-foreground">
               <Crown className="mr-1 h-3.5 w-3.5 text-primary" />
-              <span className="text-xs font-medium">Simple Pricing</span>
+              <span className="text-xs font-medium">Agency Pricing</span>
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4 text-foreground">
-              Pricing Based on Your Success
+              Transparent Pricing for Medical Agencies
             </h2>
             <p className="text-muted-foreground md:text-lg/relaxed">
-              We offer simple, transparent pricing for all our services. Unlock everything you need to build your next great application.
+              Start with a one-time setup and scale with HIPAA-compliant infrastructure and flexible per-minute usage.
             </p>
           </motion.div>
         </div>
@@ -103,27 +103,27 @@ export function CombinedPricing() {
               {/* Left column - Pricing details */}
               <div className="p-6 md:p-8 md:w-[55%] flex flex-col justify-between">
                 <div>
-                  <h3 className="text-2xl font-bold mb-2 text-foreground">Premium Plan</h3>
-                  <p className="text-muted-foreground mb-6">Build your SaaS application with this premium starter toolkit.</p>
+                  <h3 className="text-2xl font-bold mb-2 text-foreground">Medical Agency OS</h3>
+                  <p className="text-muted-foreground mb-6">Complete infrastructure for medical voice AI deployment at scale.</p>
 
                   <div className="grid sm:grid-cols-2 gap-4 mb-8">
                     <div className="relative border border-border/50 rounded-xl bg-background/50 p-4">
                       <div className="space-y-1">
                         <div className="flex items-center justify-between">
-                          <h3 className="leading-none font-semibold text-foreground">Monthly</h3>
+                          <h3 className="leading-none font-semibold text-foreground">Setup Fee</h3>
                         </div>
-                        <p className="text-muted-foreground text-xs pt-1">Best value for growing businesses!</p>
+                        <p className="text-muted-foreground text-xs pt-1">One-time account activation!</p>
                       </div>
                       <div className="mt-6 space-y-4">
                         <div className="text-muted-foreground flex items-end gap-0.5 text-xl">
                           <span>$</span>
                           <span className="text-foreground -mb-0.5 text-4xl font-extrabold tracking-tighter">
-                            7.99
+                            300
                           </span>
-                          <span>/mo</span>
+                          <span className="text-sm">/once</span>
                         </div>
-                        <Button className="w-full" variant="outline">
-                          Start Monthly
+                        <Button className="w-full" variant="outline" onClick={() => window.location.href = '/#contact'}>
+                          Pay Setup Fee
                         </Button>
                       </div>
                     </div>
@@ -138,30 +138,35 @@ export function CombinedPricing() {
                       />
                       <div className="space-y-1 relative z-10">
                         <div className="flex items-center justify-between">
-                          <h3 className="leading-none font-semibold text-foreground">Yearly</h3>
-                          <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-primary/90 text-primary-foreground">22% OFF</Badge>
+                          <h3 className="leading-none font-semibold text-foreground">HIPAA Fee</h3>
                         </div>
-                        <p className="text-muted-foreground text-xs pt-1">Unlock savings with an annual commitment!</p>
+                        <p className="text-muted-foreground text-xs pt-1">Monthly compliance & security!</p>
                       </div>
                       <div className="mt-6 space-y-4 relative z-10">
                         <div className="text-muted-foreground flex items-end text-xl">
                           <span>$</span>
                           <span className="text-primary -mb-0.5 text-4xl font-extrabold tracking-tighter">
-                            6.99
+                            300
                           </span>
-                          <span>/mo</span>
+                          <span className="text-sm">/mo</span>
                         </div>
-                        <Button className="w-full">
-                          Get Started Now
+                        <Button className="w-full" onClick={() => window.location.href = '/#contact'}>
+                          Start Monthly
                         </Button>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="text-muted-foreground flex items-center gap-x-2 text-sm mt-4">
-                  <ShieldCheckIcon className="size-4 text-green-500 shrink-0" />
-                  <span>Access to all features with no hidden fees or extra costs.</span>
+                <div className="text-muted-foreground flex flex-col gap-y-2 mt-4">
+                  <div className="flex items-center gap-x-2 text-sm">
+                    <ShieldCheckIcon className="size-4 text-green-500 shrink-0" />
+                    <span>HIPAA-Compliant infrastructure with dedicated BAA.</span>
+                  </div>
+                  <div className="flex items-start gap-x-2 text-xs opacity-80">
+                    <Check className="size-3 text-primary mt-1 shrink-0" />
+                    <span>Call Credits: Per-minute cost depends on Agent Config (AI Model, Voice, Transcriber). Top-up anytime.</span>
+                  </div>
                 </div>
               </div>
 

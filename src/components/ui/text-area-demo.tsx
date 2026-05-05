@@ -8,9 +8,9 @@ const TextareaWithHelperTextDemo = () => {
 
   return (
     <div className='w-full space-y-2'>
-      <Label htmlFor={id}>Textarea with helper text</Label>
-      <Textarea placeholder='Type your feedback here' id={id} />
-      <p className='text-muted-foreground text-xs'>Your feedback is useful for us.</p>
+      <Label htmlFor={id}>Agency Feedback</Label>
+      <Textarea placeholder='Share your thoughts on AIVoice OS...' id={id} />
+      <p className='text-muted-foreground text-xs'>Help us build the perfect medical agency operating system.</p>
     </div>
   )
 }

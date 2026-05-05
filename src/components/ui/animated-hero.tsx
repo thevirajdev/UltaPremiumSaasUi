@@ -11,7 +11,7 @@ import MotionButton from "./motion-button";
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
-    () => ["amazing", "new", "wonderful", "beautiful", "smart"],
+    () => ["human-like", "efficient", "automated", "HIPAA-safe", "intelligent"],
     []
   );
 
@@ -32,12 +32,12 @@ function Hero() {
         <div className="flex gap-8 pt-24 pb-0 lg:pt-32 lg:pb-0 items-center justify-center flex-col">
           <div>
             <Button variant="secondary" size="sm" className="gap-4">
-              Read our launch article <MoveRight className="w-4 h-4" />
+              Explore the ClinicAI Platform <MoveRight className="w-4 h-4" />
             </Button>
           </div>
           <div className="flex gap-4 flex-col">
-            <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
-              <span className="text-foreground">This is something</span>
+            <h1 className="text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-regular">
+              <span className="text-foreground">Medical Voice AI that is</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
                 &nbsp;
                 {titles.map((title, index) => (
@@ -65,10 +65,9 @@ function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
-              Managing a small business today is already tough. Avoid further
-              complications by ditching outdated, tedious trade methods. Our
-              goal is to streamline SMB trade, making it easier and faster than
-              ever.
+              The Operating System for Medical Voice AI. Automate your clinic's front desk with 
+              24/7 human-like voice receptionists that book appointments and sync 
+              directly with your EMR.
             </p>
           </div>
           <div className="flex flex-row gap-3">
@@ -76,10 +75,11 @@ function Hero() {
               size="lg" 
               variant="outline" 
               className="gap-4 border-foreground/20 text-foreground hover:bg-foreground/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10 transition-all rounded-full h-14"
+              onClick={() => window.location.href = '/#contact'}
             >
               Jump on a call <PhoneCall className="w-4 h-4" />
             </Button>
-            <MotionButton label="Sign up here" />
+            <MotionButton label="Sign up here" onClick={() => window.location.href = '/felix/city-dental/appointments'} />
           </div>
 
           <div className="flex items-center rounded-full border border-border bg-background/50 backdrop-blur-sm p-1 shadow shadow-black/5 mt-4">

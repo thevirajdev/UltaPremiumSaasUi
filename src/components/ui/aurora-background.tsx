@@ -7,14 +7,16 @@ import { Button } from "@/components/ui/button";
 import { FloatingPaths } from "./background-paths";
 
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
-  children: ReactNode;
+  children?: ReactNode;
   showRadialGradient?: boolean;
+  showPaths?: boolean;
 }
 
 export const AuroraBackground = ({
   className,
   children,
   showRadialGradient = true,
+  showPaths = true,
   ...props
 }: AuroraBackgroundProps) => {
   const { theme, setTheme } = useTheme();
@@ -54,10 +56,12 @@ export const AuroraBackground = ({
           />
           
           {/* Floating Paths (Higher starting point) */}
-          <div className="absolute -top-20 inset-x-0 h-[140vh] z-0 opacity-40 dark:opacity-40">
-            <FloatingPaths position={1} />
-            <FloatingPaths position={-1} />
-          </div>
+          {showPaths && (
+            <div className="absolute -top-20 inset-x-0 h-[140vh] z-0 opacity-40 dark:opacity-40">
+              <FloatingPaths position={1} />
+              <FloatingPaths position={-1} />
+            </div>
+          )}
         </div>
 
         {/* Content Layer */}

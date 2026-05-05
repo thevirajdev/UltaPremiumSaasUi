@@ -1,3 +1,4 @@
+"use client";
 import { Hero } from "@/components/ui/animated-hero";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { Header } from "@/components/ui/header-2";
@@ -18,6 +19,10 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { DemoAnimatedFooter } from "@/components/ui/demo-animated-footer";
 import { DemoFooter7 } from "@/components/ui/demo-footer-7";
+import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import LoginCard from "@/components/ui/login-card";
 
 const logos = [
   { src: "https://svgl.app/library/nvidia-wordmark-light.svg", alt: "Nvidia Logo" },
@@ -31,9 +36,15 @@ const logos = [
 ];
 
 export default function LandingPage() {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect logic removed to allow viewing landing page
+  }, [router]);
   return (
     <AuroraBackground>
-      <Header />
+      <Header onOpenLogin={() => setIsLoginOpen(true)} />
       <Hero />
       <div className="flex flex-col overflow-hidden w-full -mt-12 lg:-mt-20 relative z-20">
         <ContainerScroll titleComponent={null}>
@@ -60,7 +71,9 @@ export default function LandingPage() {
         <div className="mt-8 h-px bg-border [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
       </section>
 
-      <Features />
+      <div id="features">
+        <Features />
+      </div>
       <FeaturesMetrics />
       <FeaturesBento />
       <RuixenBentoCards />
@@ -78,7 +91,9 @@ export default function LandingPage() {
           )}
         />
         <CombinedPricing />
-        <FAQSection />
+        <div id="faq">
+          <FAQSection />
+        </div>
         <ContactSection />
         <CombinedCTA />
         
@@ -94,6 +109,12 @@ export default function LandingPage() {
       
       <DemoFooter7 />
       <DemoAnimatedFooter />
+      
+      <AnimatePresence>
+        {isLoginOpen && (
+          <LoginCard onClose={() => setIsLoginOpen(false)} />
+        )}
+      </AnimatePresence>
     </AuroraBackground>
   );
 }

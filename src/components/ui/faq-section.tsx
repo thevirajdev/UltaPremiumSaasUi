@@ -8,35 +8,35 @@ const items = [
     icon: Database,
     title: "Is ClinicAI HIPAA compliant?",
     content:
-      "Yes. ClinicAI is built from the ground up with healthcare compliance in mind. All data is encrypted at rest and in transit, meeting or exceeding HIPAA and GDPR standards.",
+      "Yes. ClinicAI is built from the ground up for healthcare. We sign BAAs with all our agency partners, and all voice data is encrypted using military-grade standards both in transit and at rest.",
   },
   {
     id: "2",
     icon: RefreshCw,
-    title: "How difficult is the integration process?",
+    title: "How does EMR integration work?",
     content:
-      "Integration is seamless. We provide comprehensive API documentation and out-of-the-box connectors for most major EHR and practice management systems. Most clinics are up and running within a week.",
+      "We provide bi-directional sync for most major EMR systems. ClinicAI can check real-time availability for appointments and write consultation summaries directly back to the patient chart after a call.",
   },
   {
     id: "3",
     icon: Zap,
-    title: "What kind of performance improvements can we expect?",
+    title: "Can I customize the AI's voice and personality?",
     content:
-      "On average, our partner clinics report a 40% reduction in administrative overhead and a 25% decrease in no-show rates within the first three months of utilizing our automated patient engagement tools.",
+      "Absolutely. You can choose from dozens of professional medical-grade voices and provide specific training data, clinic protocols, and knowledge bases to ensure the AI speaks exactly like your clinic staff.",
   },
   {
     id: "4",
     icon: ShieldCheck,
-    title: "Do you offer white-label solutions for agencies?",
+    title: "What are the white-label options for agencies?",
     content:
-      "Absolutely. Our Enterprise tier includes full white-labeling capabilities, allowing you to rebrand the dashboard, reports, and patient-facing interfaces as your own.",
+      "Our platform is built for agencies. You can fully white-label the dashboard, client reports, and caller IDs, allowing you to offer ClinicAI as a proprietary solution to your medical clients.",
   },
   {
     id: "5",
     icon: Lock,
-    title: "What happens to our data if we cancel?",
+    title: "How is billing handled for multi-clinic agencies?",
     content:
-      "You own your data. If you choose to terminate your subscription, we provide secure data export tools to ensure you can securely transition your records before we permanently delete them from our servers.",
+      "We provide a unified billing console where you can track usage across all your clients. You'll see granular breakdowns for HIPAA costs, AI credit usage, and setup fees, making it easy to manage your agency margins.",
   }
 ];
 
@@ -50,7 +50,7 @@ export function FAQSection() {
               Frequently Asked Questions
             </h2>
             <p className="text-muted-foreground mb-8">
-              Everything you need to know about ClinicAI, integration, and billing. Can't find the answer you're looking for? Reach out to our team below.
+              Everything you need to know about ClinicAI, EMR integration, and agency billing. Can't find the answer you're looking for? Reach out to our clinical support team below.
             </p>
           </div>
           <div className="md:w-2/3 bg-background/60 backdrop-blur-md rounded-2xl border border-border/50 p-6 shadow-sm">

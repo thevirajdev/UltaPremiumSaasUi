@@ -14,7 +14,7 @@ const DemoOne = () => {
             { href: "https://www.instagram.com/taher_max_", label: "Instagram" },
             { href: "https://github.com/tahermaxse", label: "GitHub" },
           ]}
-          copyrightText="Cluely 2025. All Rights Reserved"
+          copyrightText="ClinicAI 2025. All Rights Reserved"
           barCount={23}
         />;
 };

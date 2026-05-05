@@ -22,30 +22,30 @@ export default function FeaturedSectionStats() {
     <section className="w-full text-left pt-16 pb-8 md:pt-24 md:pb-12">
       <div className="w-full px-4 md:px-8">
         <h3 className="text-lg sm:text-xl lg:text-4xl font-medium text-foreground mb-16">
-          Powering teams with real-time insights.{" "}
+          Powering clinics with real-time conversational intelligence.{" "}
           <span className="text-muted-foreground text-sm sm:text-base lg:text-4xl">
-            Our next-gen analytics dashboard helps you track performance, manage
-            clients, and make data-driven decisions in seconds.
+            Our next-gen clinical dashboard helps you track patient sentiment, manage
+            appointments, and optimize medical workflows in seconds.
           </span>
         </h3>
 
         {/* Stats grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-8">
           <div>
-            <p className="text-3xl font-medium text-foreground">50,000+</p>
-            <p className="text-muted-foreground text-md">Projects Managed</p>
+            <p className="text-3xl font-medium text-foreground">1.2M+</p>
+            <p className="text-muted-foreground text-md">Clinical Conversations</p>
           </div>
           <div>
             <p className="text-3xl font-medium text-foreground">99.9%</p>
             <p className="text-muted-foreground text-md">Uptime Guarantee</p>
           </div>
           <div>
-            <p className="text-3xl font-medium text-foreground">1,200+</p>
-            <p className="text-muted-foreground text-md">Enterprise Clients</p>
+            <p className="text-3xl font-medium text-foreground">450ms</p>
+            <p className="text-muted-foreground text-md">Voice Latency</p>
           </div>
           <div>
-            <p className="text-3xl font-medium text-foreground">1.2s</p>
-            <p className="text-muted-foreground text-md">Avg. Response Time</p>
+            <p className="text-3xl font-medium text-foreground">HIPAA</p>
+            <p className="text-muted-foreground text-md">Compliant Infrastructure</p>
           </div>
         </div>
       </div>

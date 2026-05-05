@@ -4,40 +4,40 @@ import { motion } from "framer-motion";
 
 const testimonials = [
   {
-    text: "This platform revolutionized our operations, streamlining finance and inventory. The cloud-based setup keeps us productive, even remotely.",
+    text: "AIVoice OS revolutionized our medical agency's operations, streamlining patient bookings across all 15 clinics we manage.",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&q=80",
-    name: "Briana Patton",
-    role: "Operations Manager",
+    name: "Dr. Briana Patton",
+    role: "Clinical Director",
   },
   {
-    text: "Implementing this was smooth and quick. The customizable, user-friendly interface made team training effortless.",
+    text: "Implementing the voice AI was incredibly smooth. Our clinics' front-desk staff can now focus on in-person patients while the AI handles the phones.",
     image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=150&h=150&fit=crop&q=80",
     name: "Bilal Ahmed",
-    role: "IT Manager",
+    role: "Healthcare IT Lead",
   },
   {
-    text: "The support team is exceptional, guiding us through setup and providing ongoing assistance, ensuring our satisfaction.",
+    text: "The HIPAA-compliant infrastructure gives us total peace of mind. The transition to AI-driven reception was seamless for our patient base.",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&q=80",
     name: "Saman Malik",
-    role: "Customer Support Lead",
+    role: "Practice Manager",
   },
   {
-    text: "Seamless integration enhanced our business operations and efficiency. Highly recommend for its intuitive interface.",
+    text: "Integration with our existing EMR was effortless. AIVoice OS is the backbone of our clinic's growth strategy.",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&q=80",
     name: "Omar Raza",
-    role: "CEO",
+    role: "Agency CEO",
   },
   {
-    text: "Its robust features and quick support have transformed our workflow, making us significantly more efficient.",
+    text: "The latency-free voice is truly human-like. Patients don't even realize they're talking to an AI assistant.",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&q=80",
     name: "Zainab Hussain",
-    role: "Project Manager",
+    role: "Patient Experience Lead",
   },
   {
-    text: "The smooth implementation exceeded expectations. It streamlined processes, improving overall business performance.",
+    text: "The clinical reliability is unmatched. Our agency has seen a 40% increase in booked appointments since deployment.",
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&q=80",
     name: "Aliza Khan",
-    role: "Business Analyst",
+    role: "Medical Marketing Analyst",
   },
   {
     text: "Our business functions improved with a user-friendly design and positive customer feedback.",

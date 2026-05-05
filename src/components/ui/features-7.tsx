@@ -5,8 +5,8 @@ export function Features() {
         <section className="w-full overflow-hidden py-12 md:py-16">
             <div className="mx-auto w-full max-w-5xl space-y-8 px-4 md:px-6 md:space-y-12">
                 <div className="relative z-10 max-w-2xl">
-                    <h2 className="text-3xl md:text-4xl font-semibold lg:text-5xl tracking-tight">Built for Scaling teams</h2>
-                    <p className="mt-4 md:mt-6 text-base md:text-lg text-muted-foreground">Empower your team with workflows that adapt to your needs, whether you prefer git synchronization or a AI Agents interface.</p>
+                    <h2 className="text-3xl md:text-4xl font-semibold lg:text-5xl tracking-tight">Built for Modern Healthcare</h2>
+                    <p className="mt-4 md:mt-6 text-base md:text-lg text-muted-foreground">AIVoice OS provides a unified voice interface for your clinic, integrating directly with your existing software and patient databases.</p>
                 </div>
                 <div className="relative mx-0 rounded-3xl p-0 sm:p-3 md:-mx-12 lg:col-span-3">
                     <div className="[perspective:800px]">
@@ -36,30 +36,30 @@ export function Features() {
                     <div className="space-y-3">
                         <div className="flex items-center gap-2">
                             <Zap className="size-4 text-blue-500" />
-                            <h3 className="text-sm font-medium">Faaast</h3>
+                            <h3 className="text-sm font-medium">Latency-Free</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">It supports an entire helping developers and innovate.</p>
+                        <p className="text-muted-foreground text-sm leading-relaxed">Voice responses in under 500ms for a natural, human conversation experience.</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                             <Cpu className="size-4 text-indigo-500" />
-                            <h3 className="text-sm font-medium">Powerful</h3>
+                            <h3 className="text-sm font-medium">EMR Integration</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">It supports an entire helping developers and businesses.</p>
+                        <p className="text-muted-foreground text-sm leading-relaxed">Syncs appointment data and patient records in real-time across your facility.</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                             <Lock className="size-4 text-violet-500" />
-                            <h3 className="text-sm font-medium">Security</h3>
+                            <h3 className="text-sm font-medium">HIPAA Secure</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">It supports an helping developers businesses innovate.</p>
+                        <p className="text-muted-foreground text-sm leading-relaxed">Enterprise-grade encryption and BAA-protected data handling for medical privacy.</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                             <Sparkles className="size-4 text-amber-500" />
-                            <h3 className="text-sm font-medium">AI Powered</h3>
+                            <h3 className="text-sm font-medium">Agent Config</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">It supports an helping developers businesses innovate.</p>
+                        <p className="text-muted-foreground text-sm leading-relaxed">Configure AI models, voice profiles, and transcribers to match your clinic's specialty.</p>
                     </div>
                 </div>
             </div>

@@ -26,6 +26,8 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         heading: ["var(--font-heading)", "system-ui", "sans-serif"],
+        signika: ["var(--font-signika)", "system-ui", "sans-serif"],
+        "dm-sans": ["var(--font-dm-sans)", "system-ui", "sans-serif"],
       },
       animation: {
         "fade-in":     "fade-in 0.7s ease-out forwards",
@@ -34,6 +36,10 @@ const config: Config = {
         aurora:        "aurora 60s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-bar": "pulseBar 1.5s ease-in-out infinite",
+        "pulse-bar-delay": "pulseBarShort 1.5s ease-in-out 0.2s infinite",
+        "pulse-bar-delay2": "pulseBar 1.5s ease-in-out 0.4s infinite",
+        "glow": "glow 2s ease-in-out infinite",
       },
       keyframes: {
         "accordion-down": {
@@ -65,6 +71,36 @@ const config: Config = {
           "50%":  { "background-position": "100% 100%" },
           "100%": { "background-position": "0% 0%" },
         },
+        pulseBar: {
+          '0%, 100%': { 
+            height: '24px',
+            opacity: '0.6'
+          },
+          '50%': { 
+            height: '12px',
+            opacity: '0.2'
+          }
+        },
+        pulseBarShort: {
+          '0%, 100%': { 
+            height: '16px',
+            opacity: '0.6'
+          },
+          '50%': { 
+            height: '8px',
+            opacity: '0.2'
+          }
+        },
+        glow: {
+          '0%, 100%': { 
+            opacity: '0.5',
+            transform: 'scale(1)'
+          },
+          '50%': { 
+            opacity: '0.8',
+            transform: 'scale(1.1)'
+          }
+        }
       },
     },
   },

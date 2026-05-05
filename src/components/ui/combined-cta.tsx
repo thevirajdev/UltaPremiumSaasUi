@@ -8,18 +8,18 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 
 const defaultItems = [
-  "Easy Integration",
-  "24/7 Priority Support",
-  "Fully Customizable",
-  "Scalable Performance",
-  "White-label Ready",
+  "EMR Integration",
+  "HIPAA Compliant",
+  "White-label Dashboard",
+  "Clinical Personas",
+  "24/7 Agency Support",
 ];
 
 export const CombinedCTA = ({
-  title = "Ready to scale?",
-  description = "Join thousands of businesses who are already accelerating their growth with ClinicAI. Start your journey today and unlock the full potential of your operations.",
+  title = "Ready to launch your Agency OS?",
+  description = "Join the medical marketing agencies who are already accelerating their growth with ClinicAI. Deploy clinical voice AI today and unlock the full potential of your agency.",
   buttonText = "Get Started Now",
-  buttonUrl = "#",
+  buttonUrl = "/#contact",
   items = defaultItems,
 }: {
   title?: string;

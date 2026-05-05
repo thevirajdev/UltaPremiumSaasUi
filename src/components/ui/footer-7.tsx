@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import TextareaWithHelperTextDemo from "./text-area-demo";
@@ -26,63 +28,63 @@ const defaultSections = [
   {
     title: "Product",
     links: [
-      { name: "Overview", href: "#" },
-      { name: "Pricing", href: "#" },
-      { name: "Marketplace", href: "#" },
-      { name: "Features", href: "#" },
-      { name: "Integrations", href: "#" },
-      { name: "API Documentation", href: "#" },
-      { name: "Changelog", href: "#" },
-      { name: "Releases", href: "#" },
-      { name: "Security", href: "#" },
+      { name: "Overview", href: "/#" },
+      { name: "Pricing", href: "/#pricing" },
+      { name: "Marketplace", href: "/#" },
+      { name: "Features", href: "/#features" },
+      { name: "Integrations", href: "/#" },
+      { name: "API Documentation", href: "/#" },
+      { name: "Changelog", href: "/#" },
+      { name: "Releases", href: "/#" },
+      { name: "Security", href: "/#" },
     ],
   },
   {
     title: "Company",
     links: [
-      { name: "About", href: "#" },
-      { name: "Team", href: "#" },
-      { name: "Blog", href: "#" },
-      { name: "Careers", href: "#" },
-      { name: "Press", href: "#" },
-      { name: "Partners", href: "#" },
-      { name: "Contact", href: "#" },
-      { name: "Investors", href: "#" },
-      { name: "Brand Guidelines", href: "#" },
+      { name: "About", href: "/#" },
+      { name: "Team", href: "/#" },
+      { name: "Blog", href: "/#" },
+      { name: "Careers", href: "/#" },
+      { name: "Press", href: "/#" },
+      { name: "Partners", href: "/#" },
+      { name: "Contact", href: "/#contact" },
+      { name: "Investors", href: "/#" },
+      { name: "Brand Guidelines", href: "/#" },
     ],
   },
   {
     title: "Resources",
     links: [
-      { name: "Help", href: "#" },
-      { name: "Sales", href: "#" },
-      { name: "Advertise", href: "#" },
-      { name: "Privacy", href: "#" },
-      { name: "Terms of Service", href: "#" },
-      { name: "Community", href: "#" },
-      { name: "Tutorials", href: "#" },
-      { name: "Webinars", href: "#" },
-      { name: "Guides", href: "#" },
+      { name: "Help", href: "/#" },
+      { name: "Sales", href: "/#" },
+      { name: "Advertise", href: "/#" },
+      { name: "Privacy", href: "/#" },
+      { name: "Terms of Service", href: "/#" },
+      { name: "Community", href: "/#" },
+      { name: "Tutorials", href: "/#" },
+      { name: "Webinars", href: "/#" },
+      { name: "Guides", href: "/#" },
     ],
   },
 ];
 
 const defaultSocialLinks = [
-  { icon: <FaInstagram className="size-5" />, href: "#", label: "Instagram" },
-  { icon: <FaFacebook className="size-5" />, href: "#", label: "Facebook" },
-  { icon: <FaTwitter className="size-5" />, href: "#", label: "Twitter" },
-  { icon: <FaLinkedin className="size-5" />, href: "#", label: "LinkedIn" },
+  { icon: <FaInstagram className="size-5" />, href: "/", label: "Instagram" },
+  { icon: <FaFacebook className="size-5" />, href: "/", label: "Facebook" },
+  { icon: <FaTwitter className="size-5" />, href: "/", label: "Twitter" },
+  { icon: <FaLinkedin className="size-5" />, href: "/", label: "LinkedIn" },
 ];
 
 export const Footer7 = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
+    url: "/",
     src: "https://www.shadcnblocks.com/images/block/logos/shadcnblockscom-icon.svg",
-    alt: "logo",
-    title: "Shadcnblocks.com",
+    alt: "ClinicAI",
+    title: "ClinicAI",
   },
   sections = defaultSections,
-  description = "A collection of components for your startup business or side project.",
+  description = "The premier operating system for medical voice AI. Built for agencies, trusted by clinics worldwide.",
   socialLinks = defaultSocialLinks,
 }: Footer7Props) => {
   return (

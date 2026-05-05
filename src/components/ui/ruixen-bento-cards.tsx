@@ -7,29 +7,29 @@ import Link from "next/link"
 
 const cardContents = [
   {
-    title: "Beautiful Components",
+    title: "Clinical Precision",
     description:
-      "Ruixen UI provides stunning, ready-made components built with consistent design and performance in mind.",
+      "AIVoice OS handled 150+ pediatric appointments this week with 0% missed calls and real-time EMR updates for all scheduled visits.",
   },
   {
-    title: "Developer Friendly",
+    title: "HIPAA Standard",
     description:
-      "Simple APIs and excellent documentation make it easy to integrate and customize Ruixen UI in your apps.",
+      "Every patient recording is auto-redacted and stored in SOC2 Type II secure silos, ensuring total medical privacy and compliance.",
   },
   {
-    title: "Flexible Layouts",
+    title: "Omnichannel Presence",
     description:
-      "Design dynamic, responsive layouts using our grid utilities and flex-based helpers. Whether you're building dashboards, landing pages, or nested components, Ruixen UI provides composable layout primitives that scale beautifully across screen sizes. With mobile-first defaults, built-in breakpoints, and utilities like col-span, row-span, gap control, and responsive spacing, your UI adapts effortlessly to every device.",
+      "Launched 5 dental clinics simultaneously across the tri-state area using a single agency dashboard. Whether you're managing single locations or multi-clinic groups, AIVoice OS provides composable clinical workflows that scale beautifully across specialties. With multi-tenant defaults, built-in EMR mappings, and utilities like scheduling control, your agency's AI adapts effortlessly to every clinic's unique requirements.",
   },  
   {
-    title: "Dark Mode Support",
+    title: "EMR Sync",
     description:
-      "Every component is thoughtfully designed to work seamlessly in both light and dark themes.",
+      "Seamlessly synced post-op follow-up notes for 45 patients directly into Epic and Cerner systems after a massive recall campaign.",
   },
   {
-    title: "Fast & Lightweight",
+    title: "24/7 Availability",
     description:
-      "Built for speed and performance, Ruixen UI ensures quick load times without sacrificing quality.",
+      "Managed 12 emergency call redirects during the weekend holiday, ensuring no patient was left without immediate clinical guidance.",
   },
 ]
 
@@ -50,7 +50,7 @@ const PlusCard: React.FC<{
         "flex flex-col justify-between",
         className
       )}
-    ><Link href="https://ruixen.com/?utm_source=21stdev&utm_medium=button&utm_campaign=ruixen_bento_cards">
+    >
       <CornerPlusIcons />
       {/* Content */}
       <div className="relative z-10 space-y-2">
@@ -58,7 +58,7 @@ const PlusCard: React.FC<{
           {title}
         </h3>
         <p className="text-gray-700 dark:text-gray-300">{description}</p>
-      </div></Link>
+      </div>
     </div>
   )
 }
@@ -103,10 +103,10 @@ export default function RuixenBentoCards() {
         {/* Section Footer Heading */}
         <div className="max-w-2xl ml-auto text-right px-4 mt-6 lg:-mt-20">
           <h2 className="text-4xl md:text-6xl font-bold text-black dark:text-white mb-4">
-            Built for performance. Designed for flexibility.
+            Built for Clinics. Designed for Agencies.
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-lg">
-            Ruixen UI gives you the tools to build beautiful, high-performing websites with lightning speed. Each component is thoughtfully designed to be flexible, reusable, and accessible.
+            AIVoice OS provides the infrastructure for medical marketing agencies to deploy high-converting, clinically reliable voice AI to their clients. Each workflow is thoughtfully designed to be HIPAA compliant, reliable, and patient-first.
           </p>
         </div>
       </div>

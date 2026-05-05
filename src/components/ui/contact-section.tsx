@@ -15,12 +15,12 @@ export function ContactSection() {
 					<ContactCard
 						className="rounded-2xl bg-background/60 backdrop-blur-md border border-border/50 shadow-sm"
 						title="Get in touch"
-						description="Ready to transform your clinic's operations? Fill out the form below and our enterprise team will reach out within 1 business day to schedule a personalized demo."
+						description="Ready to transform your agency's clinical operations? Fill out the form below and our agency specialist team will reach out within 1 business day to schedule a personalized ClinicAI walkthrough."
 						contactInfo={[
 							{
 								icon: MailIcon,
 								label: 'Email',
-								value: 'enterprise@clinicai.com',
+								value: 'partners@clinicai.com',
 							},
 							{
 								icon: PhoneIcon,
@@ -48,7 +48,7 @@ export function ContactSection() {
 							</div>
 							<div className="flex flex-col gap-2">
 								<Label>Work Email</Label>
-								<Input type="email" placeholder="jane@clinic.com" className="bg-background/50" />
+								<Input type="email" placeholder="jane@agency.com" className="bg-background/50" />
 							</div>
 							<div className="flex flex-col gap-2">
 								<Label>Phone (Optional)</Label>
@@ -56,7 +56,7 @@ export function ContactSection() {
 							</div>
 							<div className="flex flex-col gap-2">
 								<Label>How can we help?</Label>
-								<Textarea placeholder="Tell us about your clinic's needs..." className="bg-background/50 min-h-[100px]" />
+								<Textarea placeholder="Tell us about your agency's clinical needs..." className="bg-background/50 min-h-[100px]" />
 							</div>
 							<Button className="w-full mt-2 h-11" type="button">
 								Request Demo

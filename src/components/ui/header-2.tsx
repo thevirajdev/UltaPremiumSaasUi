@@ -8,7 +8,7 @@ import { useScroll } from '@/components/ui/use-scroll';
 import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
 
-export function Header() {
+export function Header({ onOpenLogin }: { onOpenLogin: () => void }) {
 	const [open, setOpen] = React.useState(false);
 	const scrolled = useScroll(10);
 	const { theme, setTheme } = useTheme();
@@ -21,15 +21,15 @@ export function Header() {
 	const links = [
 		{
 			label: 'Features',
-			href: '#',
+			href: '/#features',
 		},
 		{
 			label: 'Pricing',
-			href: '#',
+			href: '/#pricing',
 		},
 		{
-			label: 'About',
-			href: '#',
+			label: 'FAQ',
+			href: '/#faq',
 		},
 	];
 
@@ -89,8 +89,8 @@ export function Header() {
 							{theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
 						</Button>
 					)}
-					<Button variant="ghost" className="text-muted-foreground hover:text-foreground">Sign In</Button>
-					<Button className="rounded-full px-6 shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
+					<Button variant="ghost" className="text-muted-foreground hover:text-foreground" onClick={onOpenLogin}>Sign In</Button>
+					<Button className="rounded-full px-6 shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all" onClick={() => window.location.href = '/#contact'}>
 						Get Started
 					</Button>
 				</div>
@@ -138,10 +138,10 @@ export function Header() {
 						))}
 					</div>
 					<div className="flex flex-col gap-4">
-						<Button variant="outline" className="w-full py-6 text-lg">
+						<Button variant="outline" className="w-full py-6 text-lg" onClick={() => { setOpen(false); onOpenLogin(); }}>
 							Sign In
 						</Button>
-						<Button className="w-full py-6 text-lg shadow-xl">Get Started</Button>
+						<Button className="w-full py-6 text-lg shadow-xl" onClick={() => window.location.href = '/#contact'}>Get Started</Button>
 					</div>
 				</div>
 			</div>
