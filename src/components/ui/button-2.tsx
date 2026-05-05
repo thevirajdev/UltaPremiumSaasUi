@@ -26,6 +26,7 @@ const buttonVariants = cva(
       appearance: {
         default: '',
         ghost: '',
+        light: '',
       },
       underline: {
         solid: '',
@@ -293,6 +294,11 @@ const buttonVariants = cva(
         variant: 'destructive',
         appearance: 'ghost',
         className: 'bg-transparent text-destructive/90 hover:bg-destructive/5 data-[state=open]:bg-destructive/5',
+      },
+      {
+        variant: 'destructive',
+        appearance: 'light',
+        className: 'bg-destructive/10 text-destructive hover:bg-destructive/20 border-transparent',
       },
       {
         variant: 'ghost',
