@@ -44,12 +44,15 @@ export const CombinedCTA = ({
 
               <div className="md:w-[55%] flex flex-col items-center md:items-start text-center md:text-left z-10">
                 {isInView && (
-                  <AnimatedText 
-                    text={title}
-                    className="items-center md:items-start"
-                    textClassName="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-foreground"
-                    underlineClassName="text-primary opacity-80"
-                  />
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-2 text-foreground leading-[1.2]">
+                    Ready to launch your
+                    <br />
+                    <AnimatedText 
+                      text="Agency OS?"
+                      textClassName="text-3xl md:text-4xl lg:text-5xl font-black text-foreground"
+                      underlineClassName="text-primary opacity-80"
+                    />
+                  </h2>
                 )}
                 
                 <div className="mt-8 min-h-[80px]">

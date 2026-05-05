@@ -213,7 +213,7 @@ export default function LoginCard({ onClose }: LoginCardProps) {
                     type="submit"
                     className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary rounded-full p-3 transition-colors hover:scale-105 active:scale-95"
                   >
-                    <MoveRight className="w-4 h-4 text-white" />
+                    <MoveRight className="w-4 h-4 text-primary-foreground" />
                   </motion.button>
                 </div>
               </motion.form>
@@ -242,7 +242,7 @@ export default function LoginCard({ onClose }: LoginCardProps) {
                     disabled={isLoading}
                     className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary rounded-full p-3 transition-colors hover:scale-105 active:scale-95 disabled:opacity-50"
                   >
-                    {isLoading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <MoveRight className="w-4 h-4 text-white" />}
+                    {isLoading ? <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" /> : <MoveRight className="w-4 h-4 text-primary-foreground" />}
                   </motion.button>
                 </div>
                 <button 

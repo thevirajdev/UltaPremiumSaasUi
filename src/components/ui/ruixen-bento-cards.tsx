@@ -46,7 +46,7 @@ const PlusCard: React.FC<{
   return (
     <div
       className={cn(
-        "relative border border-dashed border-zinc-400 dark:border-zinc-700 rounded-lg p-6 bg-white dark:bg-zinc-950 min-h-[200px]",
+        "relative border border-dashed border-black dark:border-white rounded-lg p-6 bg-white dark:bg-zinc-950 min-h-[200px]",
         "flex flex-col justify-between",
         className
       )}
@@ -54,10 +54,10 @@ const PlusCard: React.FC<{
       <CornerPlusIcons />
       {/* Content */}
       <div className="relative z-10 space-y-2">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+        <h3 className="text-xl font-black text-black dark:text-white">
           {title}
         </h3>
-        <p className="text-gray-700 dark:text-gray-300">{description}</p>
+        <p className="text-zinc-900 dark:text-zinc-300 font-medium leading-relaxed">{description}</p>
       </div>
     </div>
   )
@@ -89,8 +89,8 @@ const PlusIcon = ({ className }: { className?: string }) => (
 
 export default function RuixenBentoCards() {
   return (
-    <section className="bg-white dark:bg-black dark:bg-transparent border border-gray-200 dark:border-gray-800">
-      <div className="mx-auto container border border-gray-200 dark:border-gray-800 py-12 border-t-0 px-4">
+    <section className="bg-white dark:bg-black/20 border border-black dark:border-white/20">
+      <div className="mx-auto container border-x border-black dark:border-white/20 py-12 px-4">
         {/* Responsive Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 auto-rows-auto gap-4">
           <PlusCard {...cardContents[0]} className="lg:col-span-3 lg:row-span-2" />
@@ -102,10 +102,10 @@ export default function RuixenBentoCards() {
 
         {/* Section Footer Heading */}
         <div className="max-w-2xl ml-auto text-right px-4 mt-6 lg:-mt-20">
-          <h2 className="text-4xl md:text-6xl font-bold text-black dark:text-white mb-4">
+          <h2 className="text-4xl md:text-6xl font-black text-black dark:text-white mb-4">
             Built for Clinics. Designed for Agencies.
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg">
+          <p className="text-zinc-800 dark:text-zinc-400 text-lg font-medium">
             AIVoice OS provides the infrastructure for medical marketing agencies to deploy high-converting, clinically reliable voice AI to their clients. Each workflow is thoughtfully designed to be HIPAA compliant, reliable, and patient-first.
           </p>
         </div>
