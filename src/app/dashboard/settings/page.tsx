@@ -268,18 +268,18 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="payment" className="mt-0 space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <Card className="border-none shadow-xl shadow-primary/5 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground overflow-hidden rounded-3xl p-8">
+            <Card className="border-none shadow-xl shadow-primary/5 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground overflow-hidden rounded-3xl p-8 transition-all hover:shadow-primary/10">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <h3 className="text-2xl font-black tracking-tight">Payout Account</h3>
+                  <h3 className="text-2xl font-black tracking-tight text-primary-foreground">Payout Account</h3>
                   <p className="text-primary-foreground/70 font-bold uppercase tracking-widest text-[10px]">Stripe Connected • Verified</p>
                 </div>
-                <CreditCard className="h-10 w-10 text-white/40" />
+                <CreditCard className="h-10 w-10 text-primary-foreground/40" />
               </div>
               <div className="mt-8 flex items-end justify-between">
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">Next Payout</p>
-                  <p className="text-3xl font-black">$4,250.00</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-primary-foreground/50 mb-1">Next Payout</p>
+                  <p className="text-3xl font-black text-primary-foreground">$4,250.00</p>
                 </div>
                 <Button 
                   onClick={() => toast.info("Opening Stripe Dashboard...")}
