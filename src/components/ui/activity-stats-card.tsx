@@ -75,7 +75,7 @@ const StatsCard = React.forwardRef<HTMLDivElement, StatsCardProps>(
               iconContainerClassName
             )}
           >
-            {React.cloneElement(icon as React.ReactElement, { className: cn("h-4 w-4", (icon as React.ReactElement).props.className) })}
+            {React.isValidElement(icon) ? React.cloneElement(icon as any, { className: cn("h-4 w-4", (icon as any).props?.className) }) : icon}
           </div>
           <p className="text-xs font-black text-foreground/70 uppercase tracking-widest">{title}</p>
         </div>

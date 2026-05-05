@@ -3,7 +3,8 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'> {
+  size?: "default" | "small" | "large";
   wrapperClassName?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
@@ -11,7 +12,7 @@ export interface InputProps
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, wrapperClassName, prefix, suffix, error, ...props }, ref) => {
+  ({ className, type, wrapperClassName, prefix, suffix, error, size, ...props }, ref) => {
     return (
       <div className={cn("relative flex items-center", wrapperClassName)}>
         {prefix && (

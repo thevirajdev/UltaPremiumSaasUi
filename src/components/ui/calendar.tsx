@@ -405,8 +405,8 @@ const CalendarCombobox = ({
     setIsOpen(true);
   };
 
-  const onChangeInputValue = (value: string) => {
-    setInputValue(value);
+  const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
   const onClick = (value: any) => {
@@ -810,7 +810,7 @@ export const Calendar = ({
                       <Input
                         size="small"
                         value={startDate}
-                        onChange={(value) => setStartDate(value)}
+                        onChange={(e) => setStartDate(e.target.value)}
                         error={startDateError}
                       />
                     </div>
@@ -818,7 +818,7 @@ export const Calendar = ({
                       <Input
                         size="small"
                         value={startTime}
-                        onChange={(value) => setStartTime(value)}
+                        onChange={(e) => setStartTime(e.target.value)}
                         error={startTimeError}
                       />
                     )}
@@ -831,7 +831,7 @@ export const Calendar = ({
                       <Input
                         size="small"
                         value={endDate}
-                        onChange={(value) => setEndDate(value)}
+                        onChange={(e) => setEndDate(e.target.value)}
                         error={endDateError}
                       />
                     </div>
@@ -839,7 +839,7 @@ export const Calendar = ({
                       <Input
                         size="small"
                         value={endTime}
-                        onChange={(value) => setEndTime(value)}
+                        onChange={(e) => setEndTime(e.target.value)}
                         error={endTimeError}
                       />
                     )}

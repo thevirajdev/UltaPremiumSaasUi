@@ -29,7 +29,7 @@ export default function LoginCard({ onClose }: LoginCardProps) {
     }
   }, [router, onClose]);
 
-  const containerVariants = {
+  const containerVariants: any = {
     hidden: { opacity: 0, scale: 0.95 },
     visible: {
       opacity: 1,
@@ -47,7 +47,7 @@ export default function LoginCard({ onClose }: LoginCardProps) {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: any = {
     hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,

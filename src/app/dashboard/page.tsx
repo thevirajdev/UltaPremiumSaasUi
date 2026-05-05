@@ -46,7 +46,7 @@ import {
 } from "@/components/ui/weekly-kpi-chart";
 import { DonutChart, DonutChartSegment } from "@/components/ui/donut-chart";
 import { CategoryBarChart } from "@/components/ui/category-bar-chart";
-import { Button } from "@/components/ui/button-1";
+import { Button } from "@/components/ui/button-2";
 import { Badge } from "@/components/ui/badge-2";
 import { Separator } from "@/components/ui/separator";
 import {

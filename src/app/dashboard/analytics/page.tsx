@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button-2";
 import { Card, CardContent, CardHeader, CardTitle, CardToolbar, CardDescription } from "@/components/ui/card-2";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/line-charts-4";
@@ -93,6 +94,7 @@ const FinanceTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function AnalyticsPage() {
+  const router = useRouter();
   return (
     <div className="space-y-8 animate-in fade-in duration-700 pb-12">
       {/* Header Section */}
@@ -345,7 +347,7 @@ export default function AnalyticsPage() {
                   <Avatar className="h-12 w-12 border-2 border-background shadow-sm">
                     <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${clinic.name}`} />
                     <AvatarFallback>{clinic.name[0]}</AvatarFallback>
-                    <AvatarStatus status={clinic.status} />
+                    <AvatarStatus variant={clinic.status} />
                   </Avatar>
                   <div>
                     <p className="font-bold text-foreground group-hover:text-primary transition-colors">{clinic.name}</p>

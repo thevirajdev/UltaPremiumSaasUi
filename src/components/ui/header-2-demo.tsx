@@ -4,7 +4,7 @@ import { Header } from "@/components/ui/header-2";
 export default function DemoHeader() {
 	return (
 		<div className="w-full">
-			<Header />
+			<Header onOpenLogin={() => {}} />
 
 			<main className="mx-auto min-h-screen w-full max-w-3xl px-4 py-12">
 				<div  className="space-y-2 mb-4">
