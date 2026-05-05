@@ -258,7 +258,7 @@ export default function ClientPatientsPage() {
                       <span className="text-xs font-black uppercase">Upcoming Engagement</span>
                    </div>
                    <p className="text-sm font-black text-foreground">{selectedPatient.nextAppointment}</p>
-                   <Button variant="link" className="p-0 h-auto text-xs font-bold text-primary" onClick={() => toast.info('Rescheduling', { description: `Loading calendar for ${selectedPatient.name}...` })}>Reschedule Appointment</Button>
+                   <Button mode="link" className="p-0 h-auto text-xs font-bold text-primary" onClick={() => toast.info('Rescheduling', { description: `Loading calendar for ${selectedPatient.name}...` })}>Reschedule Appointment</Button>
                 </section>
               </TabsContent>
 
@@ -300,7 +300,7 @@ export default function ClientPatientsPage() {
                                <p className="text-[10px] text-muted-foreground">{app.date}</p>
                             </div>
                             <div className="text-right">
-                               <Badge variant="ghost" size="xs" className="font-bold">{app.outcome}</Badge>
+                               <Badge appearance="ghost" size="xs" className="font-bold">{app.outcome}</Badge>
                                <p className="text-[10px] font-bold text-primary mt-1">{app.action}</p>
                             </div>
                          </div>

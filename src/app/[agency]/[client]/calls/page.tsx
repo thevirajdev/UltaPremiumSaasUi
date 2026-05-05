@@ -146,7 +146,7 @@ export default function ClientCallsPage() {
           </div>
           <div className="flex items-center gap-2">
             <Badge 
-              variant={typeFilter === 'All' ? 'default' : 'secondary'} 
+              variant={typeFilter === 'All' ? 'primary' : 'secondary'} 
               className={`h-10 px-4 rounded-lg font-bold cursor-pointer transition-all gap-2 ${typeFilter === 'All' ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : 'opacity-70'}`}
               onClick={() => { console.log('Filtering All'); setTypeFilter('All'); }}
             >
@@ -154,7 +154,7 @@ export default function ClientCallsPage() {
               All Calls
             </Badge>
             <Badge 
-              variant={typeFilter === 'Inbound' ? 'default' : 'secondary'} 
+              variant={typeFilter === 'Inbound' ? 'primary' : 'secondary'} 
               className={`h-10 px-4 rounded-lg font-bold cursor-pointer transition-all gap-2 ${typeFilter === 'Inbound' ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : 'opacity-70'}`}
               onClick={() => { console.log('Filtering Inbound'); setTypeFilter('Inbound'); }}
             >
@@ -162,7 +162,7 @@ export default function ClientCallsPage() {
               Inbound Only
             </Badge>
             <Badge 
-              variant={typeFilter === 'Outbound' ? 'default' : 'secondary'} 
+              variant={typeFilter === 'Outbound' ? 'primary' : 'secondary'} 
               className={`h-10 px-4 rounded-lg font-bold cursor-pointer transition-all gap-2 ${typeFilter === 'Outbound' ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : 'opacity-70'}`}
               onClick={() => { console.log('Filtering Outbound'); setTypeFilter('Outbound'); }}
             >

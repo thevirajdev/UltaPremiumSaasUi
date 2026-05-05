@@ -35,7 +35,7 @@ import {
   BarChart
 } from "recharts";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button-2";
 import { toast } from "sonner";
 
 // Mock Data for Graphs

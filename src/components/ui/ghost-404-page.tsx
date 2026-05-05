@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const containerVariants = {
+const containerVariants: any = {
   hidden: { 
     opacity: 0,
     y: 30
@@ -17,11 +17,11 @@ const containerVariants = {
       ease: [0.43, 0.13, 0.23, 0.96],
       delayChildren: 0.1,
       staggerChildren: 0.1
-    }
+    } as any
   }
 };
 
-const itemVariants = {
+const itemVariants: any = {
   hidden: { 
     opacity: 0,
     y: 20
@@ -32,11 +32,11 @@ const itemVariants = {
     transition: {
       duration: 0.6,
       ease: [0.43, 0.13, 0.23, 0.96]
-    }
+    } as any
   }
 };
 
-const numberVariants = {
+const numberVariants: any = {
   hidden: (direction: number) => ({
     opacity: 0,
     x: direction * 40,
@@ -51,11 +51,11 @@ const numberVariants = {
     transition: {
       duration: 0.8,
       ease: [0.43, 0.13, 0.23, 0.96]
-    }
+    } as any
   }
 };
 
-const ghostVariants = {
+const ghostVariants: any = {
   hidden: { 
     scale: 0.8,
     opacity: 0,
@@ -70,7 +70,7 @@ const ghostVariants = {
     transition: {
       duration: 0.6,
       ease: [0.43, 0.13, 0.23, 0.96]
-    }
+    } as any
   },
   hover: {
     scale: 1.1,
@@ -96,7 +96,7 @@ const ghostVariants = {
         repeat: Infinity,
         repeatType: "reverse"
       }
-    }
+    } as any
   }
 };
 
