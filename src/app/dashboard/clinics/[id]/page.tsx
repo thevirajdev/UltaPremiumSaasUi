@@ -101,7 +101,7 @@ export default function ClinicDetailPage() {
                 {clinic.status}
               </Badge>
             </div>
-            <p className="text-muted-foreground font-medium">{clinic.doctor} • {clinic.email}</p>
+            <p className="text-muted-foreground font-medium">{clinic.doctorName} • {clinic.email}</p>
           </div>
         </div>
         <div className="flex gap-3">
@@ -204,7 +204,7 @@ export default function ClinicDetailPage() {
               </div>
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Primary Doctor</p>
-                <p className="font-semibold text-foreground">{clinic.doctor}</p>
+                <p className="font-semibold text-foreground">{clinic.doctorName}</p>
               </div>
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Contact Channels</p>

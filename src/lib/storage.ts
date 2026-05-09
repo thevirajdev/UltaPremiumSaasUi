@@ -32,6 +32,7 @@ export interface Clinic {
   margin: number;
   password?: string;
   status: "Active" | "Inactive" | "Pending";
+  phone: string;
   createdAt: string;
 }
 
@@ -148,6 +149,7 @@ export const storage = {
         creditsUsed: 850,
         margin: 0.15,
         status: "Active",
+        phone: "+1 (555) 012-3456",
         createdAt: new Date().toISOString()
       };
       storage.set("clinics", [newClinic]);
@@ -184,8 +186,8 @@ export const storage = {
     const totalRevenue = 4250;
     const totalCredits = mockCalls.reduce((acc, c) => acc + c.credits, 0);
     
-    storage.update("agencies", agencyId || "agency-os-default", { revenue: totalRevenue, credits: 15000 - totalCredits });
-    storage.update("clinics", clinicId || "clinic-default", { totalUsage: mockCalls.length, creditsUsed: totalCredits, totalPaid: 3200 });
+    storage.update<Agency>("agencies", agencyId || "agency-os-default", { revenue: totalRevenue, credits: 15000 - totalCredits });
+    storage.update<Clinic>("clinics", clinicId || "clinic-default", { totalUsage: mockCalls.length, creditsUsed: totalCredits, totalPaid: 3200 });
 
     // Dispatch custom event for reactive components
     window.dispatchEvent(new CustomEvent('clinicai_data_updated'));

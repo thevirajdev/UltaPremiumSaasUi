@@ -78,6 +78,7 @@ export default function ClinicRegistrationForm({ onCancel, onSuccess }: { onCanc
       creditsUsed: 0,
       margin: parseFloat(formData.callMargin),
       status: "Active" as const, 
+      phone: formData.phone,
       createdAt: new Date().toISOString()
     };
 
