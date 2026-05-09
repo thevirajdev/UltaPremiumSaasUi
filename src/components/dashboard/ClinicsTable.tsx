@@ -20,76 +20,9 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-type Clinic = {
-  id: string;
-  clinicName: string;
-  doctorName: string;
-  balance: string;
-  totalUsage: string;
-  totalPaid: string;
-  profitGenerated: string;
-  createdDate: string;
-  status: "Active" | "Inactive" | "Pending";
-};
-
-const data: Clinic[] = [
-  {
-    id: "1",
-    clinicName: "Central Medical Center",
-    doctorName: "Dr. Sarah Johnson",
-    balance: "$1,250.00",
-    totalUsage: "450 mins",
-    totalPaid: "$5,400.00",
-    profitGenerated: "$2,100.00",
-    createdDate: "2024-01-15",
-    status: "Active",
-  },
-  {
-    id: "2",
-    clinicName: "Northside Health Clinic",
-    doctorName: "Dr. Michael Chen",
-    balance: "$0.00",
-    totalUsage: "1,200 mins",
-    totalPaid: "$12,800.00",
-    profitGenerated: "$5,600.00",
-    createdDate: "2023-11-20",
-    status: "Active",
-  },
-  {
-    id: "3",
-    clinicName: "West End Specialist",
-    doctorName: "Dr. Emily Brown",
-    balance: "$450.00",
-    totalUsage: "120 mins",
-    totalPaid: "$1,500.00",
-    profitGenerated: "$600.00",
-    createdDate: "2024-02-05",
-    status: "Inactive",
-  },
-  {
-    id: "4",
-    clinicName: "Eastside Pediatrics",
-    doctorName: "Dr. David Wilson",
-    balance: "$2,100.00",
-    totalUsage: "890 mins",
-    totalPaid: "$9,200.00",
-    profitGenerated: "$3,800.00",
-    createdDate: "2023-12-10",
-    status: "Active",
-  },
-  {
-    id: "5",
-    clinicName: "City Heart Institute",
-    doctorName: "Dr. Robert Miller",
-    balance: "$150.00",
-    totalUsage: "50 mins",
-    totalPaid: "$500.00",
-    profitGenerated: "$200.00",
-    createdDate: "2024-03-01",
-    status: "Pending",
-  },
-];
+import { useClinics } from "@/hooks/use-local-data";
+import { Building2, Trash2, ExternalLink } from "lucide-react";
+import { toast } from "sonner";
 
 const allColumns = [
   "Clinic Name",
@@ -100,16 +33,18 @@ const allColumns = [
   "Profit Generated",
   "Created Date",
   "Status",
+  "Actions",
 ] as const;
 
 export function ClinicsTable() {
   const router = useRouter();
+  const { data: clinics, remove: removeClinic, loading } = useClinics();
   const [visibleColumns, setVisibleColumns] = useState<string[]>([...allColumns]);
   const [searchFilter, setSearchFilter] = useState("");
 
-  const filteredData = data.filter((clinic) => {
+  const filteredData = clinics.filter((clinic) => {
     return (
-      clinic.clinicName.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      clinic.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
       clinic.doctorName.toLowerCase().includes(searchFilter.toLowerCase())
     );
   });
@@ -122,9 +57,18 @@ export function ClinicsTable() {
     );
   };
 
-  const handleRowClick = (id: string) => {
-    router.push(`/dashboard/clinics/${id}`);
+  const handleDoubleClick = (clinic: any) => {
+    router.push(`/dashboard/clinics/${clinic.id}`);
   };
+
+  const handleDelete = (id: string, name: string) => {
+    if (window.confirm(`Are you sure you want to delete ${name}?`)) {
+      removeClinic(id);
+      toast.success("Clinic deleted successfully");
+    }
+  };
+
+  if (loading) return <div className="p-8 text-center">Loading clinics...</div>;
 
   return (
     <div className="space-y-4">
@@ -170,6 +114,7 @@ export function ClinicsTable() {
               {visibleColumns.includes("Profit Generated") && <TableHead>Profit Generated</TableHead>}
               {visibleColumns.includes("Created Date") && <TableHead>Created Date</TableHead>}
               {visibleColumns.includes("Status") && <TableHead>Status</TableHead>}
+              {visibleColumns.includes("Actions") && <TableHead className="text-right">Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -177,29 +122,29 @@ export function ClinicsTable() {
               filteredData.map((clinic) => (
                 <TableRow 
                   key={clinic.id} 
-                  className="cursor-pointer transition-colors"
-                  onClick={() => handleRowClick(clinic.id)}
+                  className="transition-colors hover:bg-muted/50 cursor-pointer select-none"
+                  onDoubleClick={() => handleDoubleClick(clinic)}
                 >
                   {visibleColumns.includes("Clinic Name") && (
-                    <TableCell className="font-medium">{clinic.clinicName}</TableCell>
+                    <TableCell className="font-medium">{clinic.name}</TableCell>
                   )}
                   {visibleColumns.includes("Doctor Name") && (
                     <TableCell>{clinic.doctorName}</TableCell>
                   )}
                   {visibleColumns.includes("Balance") && (
-                    <TableCell className="text-destructive font-medium">{clinic.balance}</TableCell>
+                    <TableCell className="text-destructive font-medium">${clinic.balance.toLocaleString()}</TableCell>
                   )}
                   {visibleColumns.includes("Total Usage") && (
-                    <TableCell>{clinic.totalUsage}</TableCell>
+                    <TableCell>{clinic.totalUsage} mins</TableCell>
                   )}
                   {visibleColumns.includes("Total Paid") && (
-                    <TableCell className="text-primary font-medium">{clinic.totalPaid}</TableCell>
+                    <TableCell className="text-primary font-medium">${clinic.totalPaid.toLocaleString()}</TableCell>
                   )}
                   {visibleColumns.includes("Profit Generated") && (
-                    <TableCell className="text-green-600 dark:text-green-400 font-medium">{clinic.profitGenerated}</TableCell>
+                    <TableCell className="text-green-600 dark:text-green-400 font-medium">${clinic.profitGenerated.toLocaleString()}</TableCell>
                   )}
                   {visibleColumns.includes("Created Date") && (
-                    <TableCell>{clinic.createdDate}</TableCell>
+                    <TableCell>{new Date(clinic.createdAt).toLocaleDateString()}</TableCell>
                   )}
                   {visibleColumns.includes("Status") && (
                     <TableCell>
@@ -216,12 +161,43 @@ export function ClinicsTable() {
                       </Badge>
                     </TableCell>
                   )}
+                  {visibleColumns.includes("Actions") && (
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-8 w-8 text-primary"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/dashboard/clinics/${clinic.id}`);
+                          }}
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-8 w-8 text-destructive"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(clinic.id, clinic.name);
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={visibleColumns.length} className="text-center py-6 text-muted-foreground">
-                  No clinics found matching your search.
+                <TableCell colSpan={visibleColumns.length} className="text-center py-12 text-muted-foreground">
+                  <div className="flex flex-col items-center gap-2">
+                    <Building2 className="h-8 w-8 opacity-20" />
+                    <p>No clinics found. Add your first clinic to get started.</p>
+                  </div>
                 </TableCell>
               </TableRow>
             )}

@@ -18,14 +18,17 @@ export default function AdminLayout({
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const userRole = localStorage.getItem('userRole');
     
-    if (isLoggedIn !== 'true') {
+    if (isLoggedIn !== 'true' || !userRole) {
       router.push('/');
     } else if (userRole !== 'superadmin') {
-      // If not superadmin, redirect based on role
+      // Access Denied: Redirect non-admins to their respective entry points
       if (userRole === 'agency') {
         router.push('/dashboard');
+      } else if (userRole === 'clinic') {
+        // Redirect clinic users to a default or their specific dashboard
+        router.push('/'); 
       } else {
-        router.push('/felix/central-medical-center');
+        router.push('/');
       }
     } else {
       setIsAuthorized(true);

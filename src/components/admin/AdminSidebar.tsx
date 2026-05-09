@@ -48,7 +48,7 @@ export function AdminSidebar() {
           <ShieldCheck className="text-primary-foreground h-5 w-5" />
         </div>
         <span className="text-xl font-bold tracking-tight text-foreground">
-          ClinicAI<span className="text-primary"> Admin</span>
+          AIVOICE OS<span className="text-primary"> Admin</span>
         </span>
       </div>
 

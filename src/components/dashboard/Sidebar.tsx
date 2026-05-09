@@ -55,9 +55,29 @@ export function Sidebar({
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
+  const [brandName, setBrandName] = React.useState('AIVOICE OS');
 
   React.useEffect(() => {
     setMounted(true);
+    const userRole = localStorage.getItem('userRole');
+    
+    if (userRole === 'agency') {
+      const storedAgencies = localStorage.getItem('clinicai_agencies');
+      const currentId = localStorage.getItem('currentAgencyId');
+      if (storedAgencies && currentId) {
+        const agencies = JSON.parse(storedAgencies);
+        const current = agencies.find((a: any) => a.id === currentId);
+        if (current) setBrandName(current.name);
+      }
+    } else if (userRole === 'clinic') {
+      const storedClinics = localStorage.getItem('clinicai_clinics');
+      const currentId = localStorage.getItem('currentClinicId');
+      if (storedClinics && currentId) {
+        const clinics = JSON.parse(storedClinics);
+        const current = clinics.find((c: any) => c.id === currentId);
+        if (current) setBrandName(current.name);
+      }
+    }
   }, []);
 
   return (
@@ -66,8 +86,8 @@ export function Sidebar({
         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
           <span className="text-primary-foreground font-bold text-lg">A</span>
         </div>
-        <span className="text-xl font-bold tracking-tight text-foreground">
-          Clinic<span className="text-primary">AI</span>
+        <span className="text-xl font-bold tracking-tight text-foreground truncate">
+          {brandName}
         </span>
       </div>
 

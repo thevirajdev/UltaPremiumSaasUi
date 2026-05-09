@@ -19,13 +19,15 @@ export default function DashboardLayout({
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const userRole = localStorage.getItem('userRole');
     
-    if (isLoggedIn !== 'true') {
+    if (isLoggedIn !== 'true' || !userRole) {
       router.push('/');
     } else if (userRole === 'clinic') {
-      // If a clinic user tries to access agency dashboard, redirect to their console
-      router.push('/felix/central-medical-center');
-    } else {
+      // Access Denied: Clinic users cannot access the Agency management console
+      router.push('/'); 
+    } else if (userRole === 'agency' || userRole === 'superadmin') {
       setIsAuthorized(true);
+    } else {
+      router.push('/');
     }
   }, [router]);
 

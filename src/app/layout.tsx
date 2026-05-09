@@ -30,8 +30,26 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "ClinicAI",
-  description: "Operating System for Medical Voice AI",
+  title: "AIVOICE OS - AI Voice Operating System for Healthcare",
+  description: "Transform your clinical operations with the most advanced AI Voice OS. Powered by Nexautomate.",
+  authors: [{ name: "The Viraj developer", url: "https://nexautomate.in" }],
+  keywords: ["AI Voice OS", "Healthcare AI", "Nexautomate", "AIVOICE OS", "Clinical Automation"],
+  creator: "Nexautomate",
+  publisher: "Nexautomate",
+  openGraph: {
+    title: "AIVOICE OS",
+    description: "Next-gen AI Voice Operating System for Agencies and Clinics.",
+    url: "https://nexautomate.in",
+    siteName: "AIVOICE OS",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AIVOICE OS",
+    description: "Automate your medical clinic with AIVOICE OS by Nexautomate.",
+    creator: "@thevirajrealm",
+  },
 };
 
 export default function RootLayout({

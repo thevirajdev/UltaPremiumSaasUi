@@ -30,16 +30,12 @@ export default function ClientDashboardLayout({
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const userRole = localStorage.getItem('userRole');
     
-    if (isLoggedIn !== 'true') {
+    if (isLoggedIn !== 'true' || !userRole) {
       router.push('/');
-    } else if (userRole === 'agency') {
-      // Agency users can access clinic dashboards
-      setIsAuthorized(true);
-    } else if (userRole === 'clinic') {
-      // Clinic users can access clinic dashboards
+    } else if (userRole === 'agency' || userRole === 'clinic' || userRole === 'superadmin') {
       setIsAuthorized(true);
     } else {
-      setIsAuthorized(true);
+      router.push('/');
     }
   }, [router]);
 

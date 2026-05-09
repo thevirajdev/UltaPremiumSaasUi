@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button-2";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card-2";
 import { 
@@ -16,26 +16,42 @@ import {
   Filter,
   ArrowUpRight,
   HardDrive,
-  CheckCircle2
+  CheckCircle2,
+  Building2
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge-2";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
+import { useClinics } from "@/hooks/use-local-data";
+import { useRouter } from "next/navigation";
 
 // Mock data for heatmap (intensity 0-4)
 const heatmapData = Array.from({ length: 84 }, (_, i) => Math.floor(Math.random() * 5));
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const clinicUsage = [
-  { id: 1, name: "Central Medical Center", minutes: "4,250", cost: "$637.50", storage: "12.4 GB", credits: "850" },
-  { id: 2, name: "City Dental Clinic", minutes: "2,100", cost: "$315.00", storage: "5.8 GB", credits: "420" },
-  { id: 3, name: "Wellness Family Clinic", minutes: "1,850", cost: "$277.50", storage: "4.2 GB", credits: "370" },
-  { id: 4, name: "East Side Pediatrics", minutes: "950", cost: "$142.50", storage: "2.1 GB", credits: "190" },
-  { id: 5, name: "Sunrise Eye Care", minutes: "420", cost: "$63.00", storage: "0.8 GB", credits: "84" },
-];
-
 export default function UsagePage() {
+  const router = useRouter();
+  const { data: clinics, loading } = useClinics();
+
+  const stats = useMemo(() => {
+    const totalMinutes = clinics.reduce((acc, c) => acc + (c.totalUsage || 0), 0);
+    const totalCredits = clinics.reduce((acc, c) => acc + (c.creditsUsed || 0), 0);
+    const totalCost = totalMinutes * 0.05; // $0.05 per minute
+    const totalStorage = clinics.length * 0.1; // 100MB per clinic
+
+    return {
+      totalMinutes,
+      totalCredits,
+      totalCost,
+      totalStorage,
+      creditsPercent: Math.min((totalCredits / 12000) * 100, 100),
+      storagePercent: Math.min((totalStorage / 100) * 100, 100)
+    };
+  }, [clinics]);
+
+  if (loading) return <div className="p-8">Loading...</div>;
+
   return (
     <div className="space-y-8 pb-12 max-w-(--breakpoint-2xl) mx-auto">
       {/* Page Header */}
@@ -87,8 +103,8 @@ export default function UsagePage() {
             </div>
             <div>
               <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Minutes Consumed</p>
-              <p className="text-3xl font-black text-foreground">33,560</p>
-              <p className="text-[10px] text-muted-foreground font-medium mt-1">+12% from last period</p>
+              <p className="text-3xl font-black text-foreground">{stats.totalMinutes.toLocaleString()}</p>
+              <p className="text-[10px] text-muted-foreground font-medium mt-1">Real-time sync</p>
             </div>
           </CardContent>
         </Card>
@@ -105,11 +121,11 @@ export default function UsagePage() {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Used / Total</p>
-                  <p className="text-3xl font-black text-foreground">8.4k <span className="text-sm font-bold text-muted-foreground">/ 12k</span></p>
+                  <p className="text-3xl font-black text-foreground">{(stats.totalCredits / 1000).toFixed(1)}k <span className="text-sm font-bold text-muted-foreground">/ 12k</span></p>
                 </div>
-                <span className="text-xs font-bold text-yellow-600">70%</span>
+                <span className="text-xs font-bold text-yellow-600">{stats.creditsPercent.toFixed(0)}%</span>
               </div>
-              <Progress value={70} className="h-1.5 bg-yellow-500/10" />
+              <Progress value={stats.creditsPercent} className="h-1.5 bg-yellow-500/10" />
             </div>
           </CardContent>
         </Card>
@@ -124,7 +140,7 @@ export default function UsagePage() {
             </div>
             <div>
               <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Infrastructure Expense</p>
-              <p className="text-3xl font-black text-foreground">$1,678.20</p>
+              <p className="text-3xl font-black text-foreground">${stats.totalCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               <p className="text-[10px] text-muted-foreground font-medium mt-1">Avg: $0.05 / min</p>
             </div>
           </CardContent>
@@ -142,17 +158,17 @@ export default function UsagePage() {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Transcripts & Audio</p>
-                  <p className="text-3xl font-black text-foreground">25.4 GB</p>
+                  <p className="text-3xl font-black text-foreground">{stats.totalStorage.toFixed(1)} GB</p>
                 </div>
-                <span className="text-xs font-bold text-green-600">25%</span>
+                <span className="text-xs font-bold text-green-600">{stats.storagePercent.toFixed(1)}%</span>
               </div>
-              <Progress value={25} className="h-1.5 bg-green-500/10" />
+              <Progress value={stats.storagePercent} className="h-1.5 bg-green-500/10" />
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Heatmap Section (Requested) */}
+      {/* Heatmap Section */}
       <Card className="shadow-sm border-border/60">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -201,19 +217,12 @@ export default function UsagePage() {
         </CardContent>
       </Card>
 
-      {/* Per Clinic Usage Table (Requested) */}
+      {/* Per Clinic Usage Table */}
       <Card className="shadow-sm border-border/60 overflow-hidden">
         <CardHeader className="bg-muted/10 border-b border-border/60 flex flex-row items-center justify-between py-4">
           <div>
             <CardTitle className="text-lg">Facility Consumption Breakdown</CardTitle>
             <CardDescription>Granular resource usage per clinic</CardDescription>
-          </div>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input 
-              placeholder="Search clinics..." 
-              className="pl-9 pr-4 py-2 bg-background border border-border/60 rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20 w-64"
-            />
           </div>
         </CardHeader>
         <div className="overflow-x-auto">
@@ -229,26 +238,37 @@ export default function UsagePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {clinicUsage.map((clinic) => (
+              {clinics.map((clinic) => (
                 <TableRow key={clinic.id} className="hover:bg-muted/20 border-border/40 transition-colors">
                   <TableCell className="font-bold text-foreground">{clinic.name}</TableCell>
-                  <TableCell className="text-right font-mono font-medium">{clinic.minutes}</TableCell>
-                  <TableCell className="text-right font-mono font-medium text-yellow-600">{clinic.credits}</TableCell>
-                  <TableCell className="text-right font-mono font-medium text-muted-foreground">{clinic.storage}</TableCell>
-                  <TableCell className="text-right font-black text-foreground">{clinic.cost}</TableCell>
+                  <TableCell className="text-right font-mono font-medium">{clinic.totalUsage?.toLocaleString()}</TableCell>
+                  <TableCell className="text-right font-mono font-medium text-yellow-600">{clinic.creditsUsed?.toLocaleString()}</TableCell>
+                  <TableCell className="text-right font-mono font-medium text-muted-foreground">0.1 GB</TableCell>
+                  <TableCell className="text-right font-black text-foreground">${((clinic.totalUsage || 0) * 0.05).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
                   <TableCell className="text-center">
-                    <Button variant="ghost" size="sm" mode="icon" className="h-8 w-8 rounded-full">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      mode="icon" 
+                      className="h-8 w-8 rounded-full"
+                      onClick={() => router.push(`/agency-os/${clinic.name.toLowerCase().replace(/\s+/g, '-')}`)}
+                    >
                       <ChevronRight className="h-4 w-4" />
                     </Button>
                   </TableCell>
                 </TableRow>
               ))}
+              {clinics.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} className="py-12 text-center text-muted-foreground italic text-xs">No clinic usage data found.</TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>
       </Card>
 
-      {/* Expense & Income Summary (Requested) */}
+      {/* Expense & Income Summary */}
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="shadow-sm border-border/60">
           <CardHeader>
@@ -262,27 +282,27 @@ export default function UsagePage() {
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm">
                 <span className="text-muted-foreground font-medium">Vapi API Usage</span>
-                <span className="font-bold">$1,240.50</span>
+                <span className="font-bold">${(stats.totalCost * 0.8).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
-              <Progress value={75} className="h-1.5 bg-destructive/10" />
+              <Progress value={80} className="h-1.5 bg-destructive/10" />
             </div>
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm">
                 <span className="text-muted-foreground font-medium">ElevenLabs Voice</span>
-                <span className="font-bold">$280.20</span>
+                <span className="font-bold">${(stats.totalCost * 0.15).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <Progress value={15} className="h-1.5 bg-destructive/10" />
             </div>
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm">
                 <span className="text-muted-foreground font-medium">Supabase Storage</span>
-                <span className="font-bold">$157.50</span>
+                <span className="font-bold">${(stats.totalCost * 0.05).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
-              <Progress value={10} className="h-1.5 bg-destructive/10" />
+              <Progress value={5} className="h-1.5 bg-destructive/10" />
             </div>
             <div className="pt-4 border-t border-border mt-6 flex justify-between items-center">
               <span className="text-sm font-black uppercase tracking-tighter">Total Incurred Expense</span>
-              <span className="text-xl font-black text-destructive">$1,678.20</span>
+              <span className="text-xl font-black text-destructive">${stats.totalCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
           </CardContent>
         </Card>
@@ -301,21 +321,21 @@ export default function UsagePage() {
           <CardContent className="space-y-4 relative z-10">
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 bg-muted/30 rounded-xl">
-                 <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Total Billed</p>
-                 <p className="text-2xl font-black text-foreground">$5,400.00</p>
+                 <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Total Paid by Clinics</p>
+                 <p className="text-2xl font-black text-foreground">${clinics.reduce((acc, c) => acc + (c.totalPaid || 0), 0).toLocaleString()}</p>
               </div>
               <div className="p-4 bg-green-500/5 border border-green-500/20 rounded-xl">
                  <p className="text-[10px] font-black text-green-600 uppercase tracking-widest mb-1">Net Margin</p>
-                 <p className="text-2xl font-black text-green-600">$3,721.80</p>
+                 <p className="text-2xl font-black text-green-600">${clinics.reduce((acc, c) => acc + (c.profitGenerated || 0), 0).toLocaleString()}</p>
               </div>
             </div>
             <div className="p-4 bg-primary/5 rounded-xl border border-primary/20 space-y-3">
                <div className="flex justify-between items-center">
                   <span className="text-sm font-bold flex items-center gap-2"><Zap className="h-4 w-4 text-brand" /> ROI Indicator</span>
-                  <Badge variant="success" appearance="light">+221%</Badge>
+                  <Badge variant="success" appearance="light">Synced</Badge>
                </div>
                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Your current profit margin is optimized. For every $1 spent on infrastructure, you are generating ~$2.21 in net profit.
+                  Your profitability is calculated from real clinic payments minus estimated infrastructure costs ($0.05/min).
                </p>
             </div>
           </CardContent>

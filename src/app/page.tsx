@@ -50,7 +50,7 @@ export default function LandingPage() {
         <ContainerScroll titleComponent={null}>
           <Image
             src="/dashboard.png?v=3"
-            alt="ClinicAI Dashboard"
+            alt="AIVOICE OS Dashboard"
             height={720}
             width={1400}
             className="mx-auto rounded-2xl object-cover h-full object-left-top"
@@ -100,7 +100,7 @@ export default function LandingPage() {
         {/* Emoji Rating Interaction */}
         <div className="flex flex-col items-center gap-8 py-16 mt-8 z-10 relative">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground/60">
-            How was your experience exploring ClinicAI?
+            How was your experience exploring AIVOICE OS?
           </p>
           <RatingInteraction />
           <div className="mt-4 h-px w-24 bg-gradient-to-r from-transparent via-border to-transparent" />

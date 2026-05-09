@@ -64,42 +64,80 @@ export default function LoginCard({ onClose }: LoginCardProps) {
     // Mock API delay
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    if (email === 'test@gmail.com' && password === 'test123') {
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userRole', 'agency');
-      setIsRedirecting(true);
-      setTimeout(() => {
-        router.push('/dashboard');
-        onClose();
-      }, 1500);
-    } else if (email === 'testclinic@gmail.com' && password === 'test123') {
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userRole', 'clinic');
-      setIsRedirecting(true);
-      setTimeout(() => {
-        // Redirecting to a mock clinic dashboard
-        router.push('/felix/central-medical-center');
-        onClose();
-      }, 1500);
-    } else if (email === 'superadmin@gmail.com' && password === 'sudosu@123') {
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userRole', 'superadmin');
-      setIsRedirecting(true);
-      setTimeout(() => {
-        router.push('/admin');
-        onClose();
-      }, 1500);
-    } else {
-      setIsLoading(false);
-      setError('Invalid credentials. Please use demo account for access.');
+    // 1. Check Super Admin via API
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      
+      const authData = await response.json();
+      
+      if (response.ok && authData.success && authData.userRole === 'superadmin') {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', 'superadmin');
+        setIsRedirecting(true);
+        setTimeout(() => {
+          router.push('/admin');
+          onClose();
+        }, 1500);
+        return;
+      }
+    } catch (apiError) {
+      // API auth check
     }
+
+    // 2. Check Dynamic Agencies from localStorage
+    const storedAgenciesData = localStorage.getItem('clinicai_agencies');
+    if (storedAgenciesData) {
+      const agencies = JSON.parse(storedAgenciesData);
+      const agency = agencies.find((a: any) => a.email === email && a.password === password);
+      
+      if (agency) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', 'agency');
+        localStorage.setItem('currentAgencyId', agency.id);
+        setIsRedirecting(true);
+        setTimeout(() => {
+          router.push('/dashboard');
+          onClose();
+        }, 1500);
+        return;
+      }
+    }
+
+    // 3. Check Dynamic Clinics from localStorage
+    const storedClinicsData = localStorage.getItem('clinicai_clinics');
+    if (storedClinicsData) {
+      const clinics = JSON.parse(storedClinicsData);
+      const clinic = clinics.find((c: any) => c.email === email && c.password === password);
+      
+      if (clinic) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', 'clinic');
+        localStorage.setItem('currentClinicId', clinic.id);
+        setIsRedirecting(true);
+        setTimeout(() => {
+          const slug = clinic.name.toLowerCase().replace(/\s+/g, '-');
+          // Assuming the agency slug is 'agency-os' or similar, we use a generic path or the one provided
+          router.push(`/agency-os/${slug}`);
+          onClose();
+        }, 1500);
+        return;
+      }
+    }
+
+    // No match found
+    setIsLoading(false);
+    setError('Invalid credentials. Access restricted to authorized personnel.');
   };
 
   const handleSocialLogin = (provider: string) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      setError(`No ClinicAI account found for this ${provider} profile. Access is restricted to authorized clinic staff.`);
+      setError(`No AIVOICE OS account found for this ${provider} profile. Access is restricted to authorized clinic staff.`);
     }, 1500);
   };
 
@@ -134,7 +172,7 @@ export default function LoginCard({ onClose }: LoginCardProps) {
                 animate={{ opacity: 1, y: 0 }}
                 className="text-lg font-medium text-foreground tracking-tight"
               >
-                Accessing ClinicAI...
+                Accessing AIVOICE OS...
               </motion.p>
             </div>
           </motion.div>
@@ -168,7 +206,7 @@ export default function LoginCard({ onClose }: LoginCardProps) {
             <h1 className="text-3xl font-semibold text-black dark:text-white mb-2">
               Welcome back
             </h1>
-            <p className="text-black/60 dark:text-white/60 text-sm">Sign in to your ClinicAI dashboard</p>
+            <p className="text-black/60 dark:text-white/60 text-sm">Sign in to your AIVOICE OS dashboard</p>
           </motion.div>
 
           {error && (

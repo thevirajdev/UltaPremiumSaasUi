@@ -15,22 +15,22 @@ export function ContactSection() {
 					<ContactCard
 						className="rounded-2xl bg-background/60 backdrop-blur-md border border-border/50 shadow-sm"
 						title="Get in touch"
-						description="Ready to transform your agency's clinical operations? Fill out the form below and our agency specialist team will reach out within 1 business day to schedule a personalized ClinicAI walkthrough."
+						description="Ready to transform your agency's clinical operations? Fill out the form below and The Viraj developer will reach out within 1 business day to schedule a personalized AIVOICE OS walkthrough."
 						contactInfo={[
 							{
 								icon: MailIcon,
 								label: 'Email',
-								value: 'partners@clinicai.com',
+								value: 'thevirajdeveloper@gmail.com',
 							},
 							{
 								icon: PhoneIcon,
 								label: 'Phone',
-								value: '+1 (800) 555-0199',
+								value: '+91 8092363881',
 							},
 							{
 								icon: MapPinIcon,
 								label: 'Headquarters',
-								value: 'San Francisco, CA',
+								value: 'Nexautomate, India',
 								className: 'col-span-2 md:col-span-1 lg:col-span-2',
 							}
 						]}

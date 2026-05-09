@@ -32,7 +32,7 @@ function Hero() {
         <div className="flex gap-8 pt-24 pb-0 lg:pt-32 lg:pb-0 items-center justify-center flex-col">
           <div>
             <Button variant="secondary" size="sm" className="gap-4">
-              Explore the ClinicAI Platform <MoveRight className="w-4 h-4" />
+              Explore the AIVOICE OS Platform <MoveRight className="w-4 h-4" />
             </Button>
           </div>
           <div className="flex gap-4 flex-col">

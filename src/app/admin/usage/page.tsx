@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { 
   Database, 
@@ -14,53 +14,31 @@ import {
   Download
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button-2";
 import { toast } from "sonner";
-
-const usageData = [
-  {
-    agency: "Helix Medical Agency",
-    storage: "42.5 GB",
-    storagePercent: 85,
-    aiCredits: "84,200",
-    creditsPercent: 70,
-    cost: "$1,240"
-  },
-  {
-    agency: "Nexus Health Marketing",
-    storage: "18.2 GB",
-    storagePercent: 36,
-    aiCredits: "124,000",
-    creditsPercent: 92,
-    cost: "$2,100"
-  },
-  {
-    agency: "Pulse Media Group",
-    storage: "31.8 GB",
-    storagePercent: 63,
-    aiCredits: "41,200",
-    creditsPercent: 34,
-    cost: "$850"
-  },
-  {
-    agency: "Quantum Clinics",
-    storage: "12.4 GB",
-    storagePercent: 24,
-    aiCredits: "9,500",
-    creditsPercent: 8,
-    cost: "$240"
-  },
-  {
-    agency: "Aegis Agency",
-    storage: "25.6 GB",
-    storagePercent: 51,
-    aiCredits: "63,000",
-    creditsPercent: 52,
-    cost: "$1,120"
-  }
-];
+import { useAgencies } from "@/hooks/use-local-data";
 
 export default function UsagePage() {
+  const { data: agencies, loading } = useAgencies();
+
+  const stats = useMemo(() => {
+    const totalCredits = agencies.reduce((acc, a) => acc + (a.credits || 0), 0);
+    const totalStorage = agencies.length * 0.01; // Mock storage as 0.01GB per agency
+    const maxStorage = 2.0; // TB
+    const maxCredits = 1500000;
+
+    return {
+      totalCredits,
+      totalStorage,
+      storagePercent: Math.min((totalStorage / (maxStorage * 1024)) * 100, 100),
+      creditsPercent: Math.min((totalCredits / maxCredits) * 100, 100),
+      capacity: maxStorage,
+      creditLimit: maxCredits
+    };
+  }, [agencies]);
+
+  if (loading) return <div className="p-8">Loading...</div>;
+
   return (
     <div className="space-y-8 pb-12">
       <div className="flex items-center justify-between">
@@ -87,20 +65,20 @@ export default function UsagePage() {
             </div>
             <div>
               <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Total Storage Used</p>
-              <h3 className="text-3xl font-black text-foreground tracking-tighter">1.42 TB</h3>
+              <h3 className="text-3xl font-black text-foreground tracking-tighter">{stats.totalStorage.toFixed(2)} GB</h3>
             </div>
           </div>
           <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
             <motion.div 
               initial={{ width: 0 }}
-              animate={{ width: "68%" }}
+              animate={{ width: `${stats.storagePercent}%` }}
               transition={{ duration: 1.5, ease: "easeOut" }}
               className="h-full bg-blue-500 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"
             />
           </div>
           <div className="mt-4 flex justify-between text-xs font-bold text-muted-foreground uppercase tracking-widest">
-            <span>Used: 68%</span>
-            <span>Capacity: 2.0 TB</span>
+            <span>Used: {stats.storagePercent.toFixed(1)}%</span>
+            <span>Capacity: {stats.capacity} TB</span>
           </div>
         </Card>
 
@@ -114,20 +92,20 @@ export default function UsagePage() {
             </div>
             <div>
               <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Total AI Credits Consumed</p>
-              <h3 className="text-3xl font-black text-foreground tracking-tighter">1.2M</h3>
+              <h3 className="text-3xl font-black text-foreground tracking-tighter">{stats.totalCredits >= 1000 ? `${(stats.totalCredits / 1000).toFixed(1)}k` : stats.totalCredits}</h3>
             </div>
           </div>
           <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
             <motion.div 
               initial={{ width: 0 }}
-              animate={{ width: "82%" }}
+              animate={{ width: `${stats.creditsPercent}%` }}
               transition={{ duration: 1.5, ease: "easeOut" }}
               className="h-full bg-amber-500 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.5)]"
             />
           </div>
           <div className="mt-4 flex justify-between text-xs font-bold text-muted-foreground uppercase tracking-widest">
-            <span>Consumed: 82%</span>
-            <span>Total Available: 1.5M</span>
+            <span>Consumed: {stats.creditsPercent.toFixed(1)}%</span>
+            <span>Limit: {(stats.creditLimit / 1000000).toFixed(1)}M</span>
           </div>
         </Card>
       </div>
@@ -147,55 +125,65 @@ export default function UsagePage() {
                 <th className="p-6 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border/50">Agency Name</th>
                 <th className="p-6 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border/50">Storage Usage</th>
                 <th className="p-6 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border/50">AI Assistant Credits</th>
-                <th className="p-6 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border/50 text-right">Billable Amount</th>
+                <th className="p-6 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border/50 text-right">Revenue Contributed</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/30">
-              {usageData.map((data, i) => (
-                <motion.tr 
-                  key={data.agency}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="hover:bg-muted/20 transition-colors group cursor-pointer"
-                  onClick={() => toast.success(`Viewing details for ${data.agency}`)}
-                >
-                  <td className="p-6">
-                    <span className="font-bold text-foreground text-sm tracking-tight">{data.agency}</span>
-                  </td>
-                  <td className="p-6">
-                    <div className="space-y-2 max-w-[150px]">
-                      <div className="flex justify-between text-[10px] font-bold text-muted-foreground">
-                        <span>{data.storage}</span>
-                        <span>{data.storagePercent}%</span>
+              {agencies.map((agency, i) => {
+                const storagePercent = 0.5; // Mock per agency
+                const creditsPercent = Math.min(((agency.credits || 0) / 100000) * 100, 100);
+                
+                return (
+                  <motion.tr 
+                    key={agency.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="hover:bg-muted/20 transition-colors group cursor-pointer"
+                    onClick={() => toast.success(`Viewing details for ${agency.name}`)}
+                  >
+                    <td className="p-6">
+                      <span className="font-bold text-foreground text-sm tracking-tight">{agency.name}</span>
+                    </td>
+                    <td className="p-6">
+                      <div className="space-y-2 max-w-[150px]">
+                        <div className="flex justify-between text-[10px] font-bold text-muted-foreground">
+                          <span>0.01 GB</span>
+                          <span>{storagePercent}%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-blue-500 rounded-full"
+                            style={{ width: `${storagePercent}%` }}
+                          />
+                        </div>
                       </div>
-                      <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-blue-500 rounded-full"
-                          style={{ width: `${data.storagePercent}%` }}
-                        />
+                    </td>
+                    <td className="p-6">
+                      <div className="space-y-2 max-w-[150px]">
+                        <div className="flex justify-between text-[10px] font-bold text-muted-foreground">
+                          <span>{agency.credits >= 1000 ? `${(agency.credits / 1000).toFixed(1)}k` : agency.credits}</span>
+                          <span>{creditsPercent.toFixed(0)}%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-amber-500 rounded-full"
+                            style={{ width: `${creditsPercent}%` }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="p-6">
-                    <div className="space-y-2 max-w-[150px]">
-                      <div className="flex justify-between text-[10px] font-bold text-muted-foreground">
-                        <span>{data.aiCredits}</span>
-                        <span>{data.creditsPercent}%</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-amber-500 rounded-full"
-                          style={{ width: `${data.creditsPercent}%` }}
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="p-6 text-right">
-                    <span className="text-sm font-black text-foreground tracking-tighter">{data.cost}</span>
-                  </td>
-                </motion.tr>
-              ))}
+                    </td>
+                    <td className="p-6 text-right">
+                      <span className="text-sm font-black text-foreground tracking-tighter">${agency.revenue?.toLocaleString()}</span>
+                    </td>
+                  </motion.tr>
+                );
+              })}
+              {agencies.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="p-12 text-center text-muted-foreground italic text-xs">No usage data found.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

@@ -40,11 +40,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const initialTeam = [
-  { id: 1, name: "Prabhat Kumar", email: "prabhat@clinicai.com", role: "Admin", status: "online" },
-  { id: 2, name: "Sarah Smith", email: "sarah@clinicai.com", role: "Manager", status: "away" },
-  { id: 3, name: "Mike Johnson", email: "mike@clinicai.com", role: "Viewer", status: "offline" },
-];
+const initialTeam: any[] = [];
 
 export default function SettingsPage() {
   const [team, setTeam] = useState(initialTeam);
@@ -130,12 +126,12 @@ export default function SettingsPage() {
                   </div>
                   <div className="space-y-2">
                     <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">Business Email</Label>
-                    <Input defaultValue="admin@clinicai.com" className="bg-muted/30 border-none h-12" />
+                    <Input defaultValue="admin@aivoiceos.com" className="bg-muted/30 border-none h-12" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">Website URL</Label>
-                  <Input defaultValue="https://clinicai.solutions" className="bg-muted/30 border-none h-12" />
+                  <Input defaultValue="https://aivoiceos.com" className="bg-muted/30 border-none h-12" />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">HQ Address</Label>
@@ -357,7 +353,7 @@ export default function SettingsPage() {
                     </div>
                     <div>
                       <p className="font-bold text-sm text-foreground">Password Recovery</p>
-                      <p className="text-xs text-muted-foreground font-medium">Send a reset link to admin@clinicai.com</p>
+                      <p className="text-xs text-muted-foreground font-medium">Send a reset link to admin@aivoiceos.com</p>
                     </div>
                   </div>
                   <Button 

@@ -70,21 +70,20 @@ const defaultSections = [
 ];
 
 const defaultSocialLinks = [
-  { icon: <FaInstagram className="size-5" />, href: "/", label: "Instagram" },
-  { icon: <FaFacebook className="size-5" />, href: "/", label: "Facebook" },
-  { icon: <FaTwitter className="size-5" />, href: "/", label: "Twitter" },
-  { icon: <FaLinkedin className="size-5" />, href: "/", label: "LinkedIn" },
+  { icon: <FaInstagram className="size-5" />, href: "https://www.instagram.com/thevirajrealm", label: "Instagram" },
+  { icon: <FaTwitter className="size-5" />, href: "https://youtube.com/@thevirajrealm", label: "YouTube" },
+  { icon: <FaLinkedin className="size-5" />, href: "https://linkedin.com/in/thevirajrealm", label: "LinkedIn" },
 ];
 
 export const Footer7 = ({
   logo = {
     url: "/",
     src: "https://www.shadcnblocks.com/images/block/logos/shadcnblockscom-icon.svg",
-    alt: "ClinicAI",
-    title: "ClinicAI",
+    alt: "AIVOICE OS",
+    title: "AIVOICE OS",
   },
   sections = defaultSections,
-  description = "The premier operating system for medical voice AI. Built for agencies, trusted by clinics worldwide.",
+  description = "The premier operating system for medical voice AI. Powered by nexautomate.in, trusted by clinics worldwide.",
   socialLinks = defaultSocialLinks,
 }: Footer7Props) => {
   return (

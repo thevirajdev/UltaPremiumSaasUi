@@ -33,7 +33,7 @@ export function CombinedPricing() {
       role: "Operations Director",
       company: "HealthPlus Agency",
       content:
-        "ClinicAI saved our agency weeks of setup time. The Vapi integration is flawless, and the clinical personas are incredibly lifelike.",
+        "AIVOICE OS saved our agency weeks of setup time. The Vapi integration is flawless, and the clinical personas are incredibly lifelike.",
       rating: 5,
       avatar: "https://randomuser.me/api/portraits/men/32.jpg",
     },
@@ -43,7 +43,7 @@ export function CombinedPricing() {
       role: "Clinic Group Manager",
       company: "MedCare Associates",
       content:
-        "We've used many solutions, but ClinicAI stands out for its clean clinical architecture and EMR reliability. The team support is excellent.",
+        "We've used many solutions, but AIVOICE OS stands out for its clean clinical architecture and EMR reliability. The team support is excellent.",
       rating: 5,
       avatar: "https://randomuser.me/api/portraits/women/44.jpg",
     },

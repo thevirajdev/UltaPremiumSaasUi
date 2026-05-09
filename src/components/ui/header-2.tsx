@@ -69,7 +69,7 @@ export function Header({ onOpenLogin }: { onOpenLogin: () => void }) {
 			>
 				<div className="flex items-center gap-2">
 					<span className="text-xl font-bold tracking-tight text-foreground">
-						Clinic<span className="text-primary">AI</span>
+						AIVOICE <span className="text-primary">OS</span>
 					</span>
 				</div>
 				<div className="hidden items-center gap-2 md:flex">

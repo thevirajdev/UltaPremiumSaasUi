@@ -97,8 +97,6 @@ const searchItems = [
       { name: "Attention Required (Low Performance)", href: "/dashboard/clinics", sub: "alerts, low performing clinic, clinics" },
       { name: "Client Satisfaction Index", href: "/dashboard/clinics", sub: "csi, satisfaction, user, feedback" },
       { name: "Doctors Registry", href: "/dashboard/clinics", sub: "doctor, clinic doctor, team member" },
-      { name: "Central Medical Center", href: "/dashboard/clinics/central", sub: "clinic name, sarah smith" },
-      { name: "Northside Health Clinic", href: "/dashboard/clinics/northside", sub: "clinic name, james wilson" },
     ]
   },
   { 

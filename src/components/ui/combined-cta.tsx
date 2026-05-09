@@ -17,7 +17,7 @@ const defaultItems = [
 
 export const CombinedCTA = ({
   title = "Ready to launch your Agency OS?",
-  description = "Join the medical marketing agencies who are already accelerating their growth with ClinicAI. Deploy clinical voice AI today and unlock the full potential of your agency.",
+  description = "Join the medical marketing agencies who are already accelerating their growth with AIVOICE OS. Deploy clinical voice AI today and unlock the full potential of your agency.",
   buttonText = "Get Started Now",
   buttonUrl = "/#contact",
   items = defaultItems,

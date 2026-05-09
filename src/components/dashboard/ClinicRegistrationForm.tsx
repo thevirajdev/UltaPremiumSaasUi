@@ -25,8 +25,10 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { useClinics } from "@/hooks/use-local-data";
 
 export default function ClinicRegistrationForm({ onCancel, onSuccess }: { onCancel?: () => void, onSuccess?: () => void }) {
+  const { data: clinics, add: addClinic } = useClinics();
   const [formData, setFormData] = useState({
     clinicName: "",
     doctorName: "",
@@ -34,17 +36,117 @@ export default function ClinicRegistrationForm({ onCancel, onSuccess }: { onCanc
     phone: "",
     region: "us-east",
     voiceProvider: "deepgram",
-    callRate: "0.15",
+    callMargin: "0.10",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Registering Clinic:', formData);
-    toast.success('Clinic Registered Successfully', {
-      description: `${formData.clinicName} has been onboarded with a $150 setup fee.`,
-      icon: <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-    });
-    if (onSuccess) onSuccess();
+    
+    // Check for duplicates
+    const isDuplicate = clinics.some(c => 
+      c.email?.toLowerCase() === formData.email.toLowerCase() || 
+      c.name?.toLowerCase() === formData.clinicName.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      toast.error('Registration Failed', {
+        description: 'A clinic with this name or email already exists.',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    const loadingToast = toast.loading('Registering clinic and dispatching credentials...');
+    
+    // Auto-generate a secure random password
+    const generatedPassword = Math.random().toString(36).substring(2, 10).toUpperCase() + "!" + Math.floor(Math.random() * 100);
+    
+    const newClinic = {
+      id: Math.random().toString(36).substring(7),
+      agencyId: localStorage.getItem('currentAgencyId') || "current-agency",
+      name: formData.clinicName,
+      doctorName: formData.doctorName,
+      email: formData.email,
+      password: generatedPassword,
+      balance: 0,
+      totalUsage: 0,
+      totalPaid: 0,
+      profitGenerated: 0,
+      creditsUsed: 0,
+      margin: parseFloat(formData.callMargin),
+      status: "Active" as const, 
+      createdAt: new Date().toISOString()
+    };
+
+    // Get dynamic agency name
+    let currentAgencyName = "Our Agency";
+    const storedAgencies = localStorage.getItem('clinicai_agencies');
+    const currentAgencyId = localStorage.getItem('currentAgencyId');
+    if (storedAgencies && currentAgencyId) {
+      const agencies = JSON.parse(storedAgencies);
+      const agency = agencies.find((a: any) => a.id === currentAgencyId);
+      if (agency) currentAgencyName = agency.name;
+    }
+
+    // Save locally first
+    addClinic(newClinic);
+    
+    // Send Automated Onboarding Email
+    try {
+      const emailHtml = `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+          <h2 style="color: #3b82f6;">Welcome to ${currentAgencyName}!</h2>
+          <p>Hello <strong>Dr. ${formData.doctorName}</strong>,</p>
+          <p>Your medical facility, <strong>${formData.clinicName}</strong>, has been successfully registered on the <strong>AIVOICE OS</strong> platform by ${currentAgencyName}.</p>
+          
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <p style="margin: 0; font-weight: bold; color: #1e293b;">Your AIVOICE OS Credentials:</p>
+            <p style="margin: 5px 0;">Email: ${formData.email}</p>
+            <p style="margin: 5px 0;">Temporary Password: <code style="background: #e2e8f0; padding: 2px 5px; border-radius: 4px;">${generatedPassword}</code></p>
+          </div>
+
+          <p>To finalize your infrastructure setup, please complete the initial payment:</p>
+          
+          <div style="margin: 20px 0; text-align: center;">
+            <a href="https://buy.stripe.com/mock_setup_fee" style="display: inline-block; background: #3b82f6; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">Pay $150 Setup Fee</a>
+          </div>
+
+          <p style="font-size: 12px; color: #64748b;">If you have any questions, please contact the ${currentAgencyName} support team.</p>
+          <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
+          <p style="font-size: 10px; color: #94a3b8; text-align: center;">AIVOICE OS - Powered by nexautomate.in</p>
+        </div>
+      `;
+
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: formData.email,
+          subject: `Onboarding: ${formData.clinicName} - Your ${currentAgencyName} Account Credentials`,
+          html: emailHtml,
+        }),
+      });
+
+      if (!response.ok) throw new Error('Email server returned error');
+
+      toast.dismiss(loadingToast);
+      toast.success('Clinic Registered & Email Sent', {
+        description: `Credentials have been dispatched to ${formData.email}.`,
+        icon: <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+      });
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      toast.dismiss(loadingToast);
+      toast.error('Registration partially successful', {
+        description: "Clinic added, but onboarding email failed. Check API configuration.",
+      });
+    } finally {
+      setIsSubmitting(false);
+      if (onSuccess) onSuccess();
+    }
   };
 
   const updateField = (field: string, value: string) => {
@@ -138,12 +240,12 @@ export default function ClinicRegistrationForm({ onCancel, onSuccess }: { onCanc
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Default Call Rate ($/min)</Label>
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Default Call Margin ($/min)</Label>
                   <Input 
                     type="number"
                     step="0.01"
-                    value={formData.callRate}
-                    onChange={(e) => updateField('callRate', e.target.value)}
+                    value={formData.callMargin}
+                    onChange={(e) => updateField('callMargin', e.target.value)}
                     className="h-11 font-black text-primary"
                   />
                 </div>
@@ -177,9 +279,9 @@ export default function ClinicRegistrationForm({ onCancel, onSuccess }: { onCanc
                       <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-600">
                         <DollarSign className="h-4 w-4" />
                       </div>
-                      <span className="text-xs font-bold text-muted-foreground">Markup Rate</span>
+                      <span className="text-xs font-bold text-muted-foreground">Agency Margin</span>
                     </div>
-                    <span className="font-black text-sm text-foreground">${formData.callRate}/min</span>
+                    <span className="font-black text-sm text-foreground">+${formData.callMargin}/min</span>
                   </div>
 
                   <div className="flex items-center justify-between p-3 bg-background rounded-xl border border-indigo-500/20">
@@ -227,8 +329,17 @@ export default function ClinicRegistrationForm({ onCancel, onSuccess }: { onCanc
           <Button type="button" variant="ghost" className="font-bold" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit" className="bg-primary text-primary-foreground shadow-lg shadow-primary/20 px-10 h-14 font-black uppercase tracking-widest text-xs">
-            Confirm & Register
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="bg-primary text-primary-foreground shadow-lg shadow-primary/20 px-10 h-14 font-black uppercase tracking-widest text-xs min-w-[200px]"
+          >
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                Processing...
+              </div>
+            ) : "Confirm & Register"}
           </Button>
         </div>
       </form>

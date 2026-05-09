@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { 
   CreditCard, 
@@ -14,60 +14,42 @@ import {
   DollarSign
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button-2";
+import { Badge } from "@/components/ui/badge-2";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-
-const transactions = [
-  {
-    id: "TXN-001",
-    agency: "Helix Medical Agency",
-    amount: "$1,100",
-    type: "Setup + Maint",
-    status: "Completed",
-    date: "May 02, 2024",
-    method: "Stripe"
-  },
-  {
-    id: "TXN-002",
-    agency: "Nexus Health Marketing",
-    amount: "$100",
-    type: "Maintenance",
-    status: "Completed",
-    date: "May 01, 2024",
-    method: "Bank Transfer"
-  },
-  {
-    id: "TXN-003",
-    agency: "Pulse Media Group",
-    amount: "$1,000",
-    type: "Setup Cost",
-    status: "Pending",
-    date: "Apr 28, 2024",
-    method: "Stripe"
-  },
-  {
-    id: "TXN-004",
-    agency: "Aegis Agency",
-    amount: "$100",
-    type: "Maintenance",
-    status: "Completed",
-    date: "Apr 25, 2024",
-    method: "Stripe"
-  },
-  {
-    id: "TXN-005",
-    agency: "Quantum Clinics",
-    amount: "$100",
-    type: "Maintenance",
-    status: "Failed",
-    date: "Apr 20, 2024",
-    method: "Stripe"
-  }
-];
+import { useAgencies } from "@/hooks/use-local-data";
 
 export default function PaymentsPage() {
+  const { data: agencies, loading } = useAgencies();
+
+  const stats = useMemo(() => {
+    const totalNetRevenue = agencies.reduce((acc, a) => acc + (a.revenue || 0), 0);
+    const setupFees = agencies.length * 1000;
+    const maintenance = agencies.length * 100;
+
+    return {
+      totalNetRevenue,
+      setupFees,
+      maintenance,
+      activeSubs: agencies.filter(a => a.status === "Active").length
+    };
+  }, [agencies]);
+
+  const simulatedTransactions = useMemo(() => {
+    return agencies.map((agency, i) => ({
+      id: `TXN-${(i + 1).toString().padStart(3, '0')}`,
+      agency: agency.name,
+      amount: `$${(agency.revenue || 0).toLocaleString()}`,
+      type: "Setup + Maint",
+      status: "Completed",
+      date: new Date(agency.createdAt).toLocaleDateString(),
+      method: "Stripe"
+    }));
+  }, [agencies]);
+
+  if (loading) return <div className="p-8">Loading...</div>;
+
   return (
     <div className="space-y-8 pb-12">
       <div>
@@ -84,11 +66,11 @@ export default function PaymentsPage() {
             </div>
             <div className="flex items-center gap-1 text-xs font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full">
               <ArrowUpRight className="w-3 h-3" />
-              +14%
+              Live
             </div>
           </div>
           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Total Net Revenue</p>
-          <h3 className="text-3xl font-black text-foreground tracking-tighter mt-1">$142,500</h3>
+          <h3 className="text-3xl font-black text-foreground tracking-tighter mt-1">${stats.totalNetRevenue.toLocaleString()}</h3>
         </Card>
 
         <Card className="p-8 bg-background/50 backdrop-blur-sm border-border/50 group">
@@ -98,11 +80,11 @@ export default function PaymentsPage() {
             </div>
             <div className="flex items-center gap-1 text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">
               <ArrowUpRight className="w-3 h-3" />
-              +2
+              +{agencies.length}
             </div>
           </div>
           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Setup Fees Collected</p>
-          <h3 className="text-3xl font-black text-foreground tracking-tighter mt-1">$12,000</h3>
+          <h3 className="text-3xl font-black text-foreground tracking-tighter mt-1">${stats.setupFees.toLocaleString()}</h3>
         </Card>
 
         <Card className="p-8 bg-background/50 backdrop-blur-sm border-border/50 group">
@@ -111,11 +93,11 @@ export default function PaymentsPage() {
               <Clock className="w-6 h-6" />
             </div>
             <div className="flex items-center gap-1 text-xs font-bold text-amber-500 bg-amber-500/10 px-2 py-1 rounded-full">
-              7 active
+              {stats.activeSubs} active
             </div>
           </div>
-          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Active Maintenance Subscriptions</p>
-          <h3 className="text-3xl font-black text-foreground tracking-tighter mt-1">$700/mo</h3>
+          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Maintenance Subscriptions</p>
+          <h3 className="text-3xl font-black text-foreground tracking-tighter mt-1">${stats.maintenance.toLocaleString()}/mo</h3>
         </Card>
       </div>
 
@@ -149,7 +131,7 @@ export default function PaymentsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border/30">
-              {transactions.map((txn, i) => (
+              {simulatedTransactions.map((txn, i) => (
                 <motion.tr 
                   key={txn.id}
                   initial={{ opacity: 0, y: 10 }}
@@ -179,6 +161,11 @@ export default function PaymentsPage() {
                   </td>
                 </motion.tr>
               ))}
+              {simulatedTransactions.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="p-12 text-center text-muted-foreground italic text-xs">No transactions found.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

@@ -6,16 +6,16 @@ const items = [
   {
     id: "1",
     icon: Database,
-    title: "Is ClinicAI HIPAA compliant?",
+    title: "Is AIVOICE OS HIPAA compliant?",
     content:
-      "Yes. ClinicAI is built from the ground up for healthcare. We sign BAAs with all our agency partners, and all voice data is encrypted using military-grade standards both in transit and at rest.",
+      "Yes. AIVOICE OS is built from the ground up for healthcare. We sign BAAs with all our agency partners, and all voice data is encrypted using military-grade standards both in transit and at rest.",
   },
   {
     id: "2",
     icon: RefreshCw,
     title: "How does EMR integration work?",
     content:
-      "We provide bi-directional sync for most major EMR systems. ClinicAI can check real-time availability for appointments and write consultation summaries directly back to the patient chart after a call.",
+      "We provide bi-directional sync for most major EMR systems. AIVOICE OS can check real-time availability for appointments and write consultation summaries directly back to the patient chart after a call.",
   },
   {
     id: "3",
@@ -29,7 +29,7 @@ const items = [
     icon: ShieldCheck,
     title: "What are the white-label options for agencies?",
     content:
-      "Our platform is built for agencies. You can fully white-label the dashboard, client reports, and caller IDs, allowing you to offer ClinicAI as a proprietary solution to your medical clients.",
+      "Our platform is built for agencies. You can fully white-label the dashboard, client reports, and caller IDs, allowing you to offer AIVOICE OS as a proprietary solution to your medical clients.",
   },
   {
     id: "5",
@@ -50,7 +50,7 @@ export function FAQSection() {
               Frequently Asked Questions
             </h2>
             <p className="text-muted-foreground mb-8">
-              Everything you need to know about ClinicAI, EMR integration, and agency billing. Can't find the answer you're looking for? Reach out to our clinical support team below.
+              Everything you need to know about AIVOICE OS, EMR integration, and agency billing. Can't find the answer you're looking for? Reach out to our clinical support team below.
             </p>
           </div>
           <div className="md:w-2/3 bg-background/60 backdrop-blur-md rounded-2xl border border-border/50 p-6 shadow-sm">
