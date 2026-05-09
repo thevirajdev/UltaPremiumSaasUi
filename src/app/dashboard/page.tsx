@@ -59,6 +59,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useDashboard } from "@/context/DashboardContext";
 import { useClinics } from "@/hooks/use-local-data";
+import { storage } from "@/lib/storage";
 import Link from "next/link";
 
 const chartConfig = {
@@ -188,11 +189,20 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-10">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
-        <p className="text-muted-foreground text-sm">
-          Real-time performance metrics across all your clinics.
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
+          <p className="text-muted-foreground text-sm">
+            Real-time performance metrics across all your clinics.
+          </p>
+        </div>
+        <Button 
+          variant="outline" 
+          onClick={() => storage.simulateDemoData()}
+          className="gap-2 h-10 px-6 rounded-xl font-bold border-primary/20 hover:bg-primary/5 text-primary"
+        >
+          <RefreshCw className="h-4 w-4" /> Simulate All Data
+        </Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -269,12 +279,21 @@ export default function DashboardPage() {
           <p className="text-muted-foreground max-w-sm mt-2">
             Connect your first clinic to start monitoring AI assistant performance and generating revenue.
           </p>
-          <Link href="/dashboard/clinics">
-            <Button className="mt-6" variant="outline">
-              <Plus className="w-4 h-4 mr-2" />
-              Add First Clinic
+          <div className="flex flex-col sm:flex-row gap-3 mt-6">
+            <Link href="/dashboard/clinics">
+              <Button variant="outline" className="h-11 px-8 rounded-xl font-bold">
+                <Plus className="w-4 h-4 mr-2" />
+                Add First Clinic
+              </Button>
+            </Link>
+            <Button 
+              onClick={() => storage.simulateDemoData()}
+              className="h-11 px-8 rounded-xl font-bold shadow-lg shadow-primary/20"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Simulate Demo Data
             </Button>
-          </Link>
+          </div>
         </Card>
       ) : (
         <>

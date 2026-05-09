@@ -59,25 +59,48 @@ export function Sidebar({
 
   React.useEffect(() => {
     setMounted(true);
-    const userRole = localStorage.getItem('userRole');
     
-    if (userRole === 'agency') {
-      const storedAgencies = localStorage.getItem('clinicai_agencies');
-      const currentId = localStorage.getItem('currentAgencyId');
-      if (storedAgencies && currentId) {
-        const agencies = JSON.parse(storedAgencies);
-        const current = agencies.find((a: any) => a.id === currentId);
-        if (current) setBrandName(current.name);
+    const updateBrand = () => {
+      const userRole = localStorage.getItem('userRole');
+      const currentAgencyId = localStorage.getItem('currentAgencyId');
+      const currentClinicId = localStorage.getItem('currentClinicId');
+      
+      if (userRole === 'agency') {
+        const storedAgencies = localStorage.getItem('clinicai_agencies');
+        if (storedAgencies && currentAgencyId) {
+          const agencies = JSON.parse(storedAgencies);
+          const current = agencies.find((a: any) => a.id === currentAgencyId);
+          if (current) {
+            setBrandName(current.name);
+            return;
+          }
+        }
+        setBrandName('Agency OS');
+      } else if (userRole === 'clinic') {
+        const storedClinics = localStorage.getItem('clinicai_clinics');
+        if (storedClinics && currentClinicId) {
+          const clinics = JSON.parse(storedClinics);
+          const current = clinics.find((c: any) => c.id === currentClinicId);
+          if (current) {
+            setBrandName(current.name);
+            return;
+          }
+        }
+        setBrandName('Clinic Dashboard');
+      } else {
+        setBrandName('AIVOICE OS');
       }
-    } else if (userRole === 'clinic') {
-      const storedClinics = localStorage.getItem('clinicai_clinics');
-      const currentId = localStorage.getItem('currentClinicId');
-      if (storedClinics && currentId) {
-        const clinics = JSON.parse(storedClinics);
-        const current = clinics.find((c: any) => c.id === currentId);
-        if (current) setBrandName(current.name);
-      }
-    }
+    };
+
+    updateBrand();
+    window.addEventListener('storage', updateBrand);
+    // Also listen for custom events if we trigger them
+    window.addEventListener('clinicai_data_updated', updateBrand);
+    
+    return () => {
+      window.removeEventListener('storage', updateBrand);
+      window.removeEventListener('clinicai_data_updated', updateBrand);
+    };
   }, []);
 
   return (

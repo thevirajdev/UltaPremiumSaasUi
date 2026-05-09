@@ -22,6 +22,8 @@ import {
   X
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge-2";
+import { storage } from "@/lib/storage";
+import { useState, useEffect } from "react";
 import { 
   CartesianGrid, 
   ResponsiveContainer, 
@@ -109,7 +111,10 @@ export default function ClientDashboardPage() {
   }, [calls, stats]);
 
   const handleSimulateCall = () => {
-    if (!currentClinic) return;
+    if (!currentClinic) {
+      storage.simulateDemoData();
+      return;
+    }
     const names = ["George Miller", "Susan Lee", "Tom Hardy", "Alice Brown", "Steve Ross", "Emma Wilson"];
     const goals = ["BOOKING", "FOLLOW-UP", "URGENT", "INQUIRY", "EMERGENCY"];
     const durations = ["2:45", "3:12", "1:50", "4:20", "5:10"];
@@ -136,7 +141,10 @@ export default function ClientDashboardPage() {
   };
 
   const handleSimulateAppointment = () => {
-    if (!currentClinic) return;
+    if (!currentClinic) {
+      storage.simulateDemoData();
+      return;
+    }
     const services = ["Dental Checkup", "General Consultation", "Follow-up", "Urgent Care"];
     const service = services[Math.floor(Math.random() * services.length)];
     addAppointment({
@@ -295,9 +303,15 @@ export default function ClientDashboardPage() {
         <Card className="p-20 flex flex-col items-center justify-center text-center bg-muted/10 border-dashed border-2">
            <Zap className="h-12 w-12 text-muted-foreground mb-4 opacity-20" />
            <h3 className="text-xl font-bold">Waiting for AI Activity</h3>
-           <p className="text-muted-foreground max-w-sm mt-2">
+           <p className="text-muted-foreground max-w-sm mt-2 mb-8">
              Once your AI Assistant starts handling calls and booking appointments, real-time analytics will appear here.
            </p>
+           <Button 
+             onClick={() => storage.simulateDemoData()}
+             className="h-12 px-8 rounded-xl font-bold shadow-lg shadow-primary/20 gap-2"
+           >
+             <RefreshCw className="h-4 w-4" /> Simulate Initial Activity
+           </Button>
         </Card>
       ) : (
         <>

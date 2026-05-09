@@ -34,43 +34,51 @@ import { WeeklyKPIChart } from "@/components/ui/weekly-kpi-chart";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
+import { useClinics, useCalls } from "@/hooks/use-local-data";
+import { storage } from "@/lib/storage";
 
 export default function ClinicDetailPage() {
   const params = useParams();
   const router = useRouter();
   const id = params?.id as string;
 
-  // Mock data for the specific clinic
-  const clinic = {
-    id,
-    name: "Central Medical Center",
-    doctor: "Dr. Sarah Johnson",
-    balance: "$1,250.00",
-    totalUsage: "450 mins",
-    totalPaid: "$5,400.00",
-    profitGenerated: "$2,100.00",
-    status: "Active",
-    email: "sarah.j@centralmed.com",
-    phone: "+1 (555) 0123-4567",
-    joinedDate: "January 15, 2024",
+  const { data: clinics } = useClinics();
+  const { data: calls } = useCalls();
+
+  // Find the specific clinic
+  const clinic = clinics.find(c => c.id === id);
+  const clinicCalls = calls.filter(c => c.clinicId === id);
+
+  if (!clinic) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <Activity className="h-12 w-12 text-muted-foreground opacity-20" />
+        <h2 className="text-xl font-bold">Clinic Not Found</h2>
+        <Button onClick={() => router.push('/dashboard/clinics')}>Back to Clinics</Button>
+      </div>
+    );
+  }
+
+  const stats = {
+    balance: `$${(clinic.balance || 0).toLocaleString()}`,
+    totalUsage: `${(clinic.totalUsage || 0)} mins`,
+    totalPaid: `$${(clinic.totalPaid || 0).toLocaleString()}`,
+    profitGenerated: `$${(clinic.profitGenerated || 0).toLocaleString()}`,
   };
 
   const usageData = [
-    { day: "S" as const, value: 45 },
-    { day: "M" as const, value: 52 },
-    { day: "T" as const, value: 68 },
-    { day: "W" as const, value: 48 },
-    { day: "T" as const, value: 72 },
-    { day: "F" as const, value: 55 },
-    { day: "S" as const, value: 38 },
+    { day: "S" as const, value: 0 },
+    { day: "M" as const, value: 0 },
+    { day: "T" as const, value: 0 },
+    { day: "W" as const, value: clinic.totalUsage || 0 },
+    { day: "T" as const, value: 0 },
+    { day: "F" as const, value: 0 },
+    { day: "S" as const, value: 0 },
   ];
 
   const transactions = [
-    { id: "TX-101", date: "2024-05-01", type: "Top-up", amount: "+$500.00", method: "Credit Card", status: "Success" },
-    { id: "TX-102", date: "2024-05-02", type: "Outbound Call", amount: "-$12.50", method: "System Deduction", status: "Success" },
-    { id: "TX-103", date: "2024-05-02", type: "Inbound Call", amount: "-$8.20", method: "System Deduction", status: "Success" },
-    { id: "TX-104", date: "2024-05-03", type: "HIPAA Compliance Fee", amount: "-$50.00", method: "Monthly Fee", status: "Success" },
-    { id: "TX-105", date: "2024-05-04", type: "Top-up", amount: "+$1,000.00", method: "Bank Transfer", status: "Pending" },
+    { id: "TX-101", date: new Date().toLocaleDateString(), type: "Top-up", amount: `+$${(clinic.totalPaid || 0).toLocaleString()}`, method: "Credit Card", status: "Success" },
+    { id: "TX-102", date: new Date().toLocaleDateString(), type: "AI Credits", amount: `-${(clinic.creditsUsed || 0).toLocaleString()}`, method: "System Deduction", status: "Success" },
   ];
 
   return (
@@ -104,8 +112,8 @@ export default function ClinicDetailPage() {
           <Button 
             className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
             onClick={() => {
-              const clientSlug = clinic.name.toLowerCase().replace(/\s+/g, '-');
-              router.push(`/felix/${clientSlug}`);
+              const currentAgencyId = localStorage.getItem('currentAgencyId') || 'demo-agency';
+              router.push(`/${currentAgencyId}/${clinic.id}`);
             }}
           >
             <ExternalLink className="h-4 w-4" />
@@ -129,7 +137,7 @@ export default function ClinicDetailPage() {
               </div>
               <Badge variant="destructive" appearance="ghost" className="p-0"><ArrowDownLeft className="h-3 w-3" /></Badge>
             </div>
-            <p className="text-3xl font-bold tracking-tight text-destructive">{clinic.balance}</p>
+            <p className="text-3xl font-bold tracking-tight text-destructive">{stats.balance}</p>
           </CardContent>
         </Card>
         
@@ -142,7 +150,7 @@ export default function ClinicDetailPage() {
               </div>
               <Badge variant="info" appearance="ghost" className="p-0"><Zap className="h-3 w-3 text-brand" /></Badge>
             </div>
-            <p className="text-3xl font-bold tracking-tight">{clinic.totalUsage}</p>
+            <p className="text-3xl font-bold tracking-tight">{stats.totalUsage}</p>
           </CardContent>
         </Card>
 
@@ -155,7 +163,7 @@ export default function ClinicDetailPage() {
               </div>
               <Badge variant="primary" appearance="ghost" className="p-0"><ArrowUpRight className="h-3 w-3" /></Badge>
             </div>
-            <p className="text-3xl font-bold tracking-tight text-primary">{clinic.totalPaid}</p>
+            <p className="text-3xl font-bold tracking-tight text-primary">{stats.totalPaid}</p>
           </CardContent>
         </Card>
 
@@ -168,7 +176,7 @@ export default function ClinicDetailPage() {
               </div>
               <Badge variant="success" appearance="ghost" className="p-0"><ArrowUpRight className="h-3 w-3" /></Badge>
             </div>
-            <p className="text-3xl font-bold tracking-tight text-green-600">{clinic.profitGenerated}</p>
+            <p className="text-3xl font-bold tracking-tight text-green-600">{stats.profitGenerated}</p>
           </CardContent>
         </Card>
       </div>
@@ -215,6 +223,7 @@ export default function ClinicDetailPage() {
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Onboarding Date</p>
                 <p className="font-semibold text-foreground flex items-center gap-2">
                   <CalendarDays className="h-4 w-4 text-muted-foreground" />
+                  {clinic.createdAt ? new Date(clinic.createdAt).toLocaleDateString() : 'Initial'}
                 </p>
               </div>
             </div>
@@ -288,9 +297,9 @@ export default function ClinicDetailPage() {
           trend="+15.2%"
           trendText="growth from last month"
           items={[
-            { label: "Gross Income:", value: "$5,400" },
-            { label: "Vapi Expenses:", value: "$1,800" },
-            { label: "Net Margin:", value: "38.8%" }
+            { label: "Gross Income:", value: stats.totalPaid },
+            { label: "Vapi Expenses:", value: `$${((clinic.totalUsage || 0) * 0.05).toFixed(2)}` },
+            { label: "Net Margin:", value: `${(((clinic.totalPaid || 1) - (clinic.totalUsage || 0) * 0.05) / (clinic.totalPaid || 1) * 100).toFixed(1)}%` }
           ]}
         />
       </div>
