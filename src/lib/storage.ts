@@ -189,8 +189,10 @@ export const storage = {
     storage.update<Agency>("agencies", agencyId || "agency-os-default", { revenue: totalRevenue, credits: 15000 - totalCredits });
     storage.update<Clinic>("clinics", clinicId || "clinic-default", { totalUsage: mockCalls.length, creditsUsed: totalCredits, totalPaid: 3200 });
 
-    // Dispatch custom event for reactive components
-    window.dispatchEvent(new CustomEvent('clinicai_data_updated'));
+    // Dispatch custom events for reactive hooks
+    window.dispatchEvent(new CustomEvent('clinicai_update_agencies'));
+    window.dispatchEvent(new CustomEvent('clinicai_update_clinics'));
+    window.dispatchEvent(new CustomEvent('clinicai_update_calls'));
     
     // Slight delay to allow event propagation before reload
     setTimeout(() => {

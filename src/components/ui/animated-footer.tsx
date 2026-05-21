@@ -106,6 +106,9 @@ const Footer: React.FC<FooterProps> = ({
             </svg>
             {copyrightText}
           </p>
+          <p className="text-sm mt-2 font-medium text-primary">
+            Designed by Chinmay A Itagi
+          </p>
         </div>
         <div className="space-y-4">
           <ul className="flex flex-wrap gap-4">

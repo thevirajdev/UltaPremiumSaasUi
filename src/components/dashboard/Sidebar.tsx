@@ -94,12 +94,14 @@ export function Sidebar({
 
     updateBrand();
     window.addEventListener('storage', updateBrand);
-    // Also listen for custom events if we trigger them
-    window.addEventListener('clinicai_data_updated', updateBrand);
+    // Listen for specific entity updates
+    window.addEventListener('clinicai_update_agencies', updateBrand);
+    window.addEventListener('clinicai_update_clinics', updateBrand);
     
     return () => {
       window.removeEventListener('storage', updateBrand);
-      window.removeEventListener('clinicai_data_updated', updateBrand);
+      window.removeEventListener('clinicai_update_agencies', updateBrand);
+      window.removeEventListener('clinicai_update_clinics', updateBrand);
     };
   }, []);
 

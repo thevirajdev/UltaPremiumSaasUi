@@ -68,7 +68,10 @@ export default function ClientDashboardPage() {
 
   const { data: clinics } = useClinics();
   const currentClinic = useMemo(() => 
-    clinics.find(c => c.name.toLowerCase().replace(/\s+/g, '-') === client),
+    clinics.find(c => 
+      c.id === client || 
+      c.name.toLowerCase().replace(/\s+/g, '-') === client
+    ),
     [clinics, client]
   );
 

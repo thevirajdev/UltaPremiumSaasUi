@@ -106,6 +106,9 @@ export const Footer7 = ({
             <p className="max-w-[70%] text-sm text-muted-foreground">
               {description}
             </p>
+            <p className="text-sm font-semibold text-primary">
+              Designed by Chinmay A Itagi
+            </p>
             <ul className="flex items-center space-x-6 text-muted-foreground">
               {socialLinks.map((social, idx) => (
                 <li key={idx} className="font-medium hover:text-primary transition-colors">
